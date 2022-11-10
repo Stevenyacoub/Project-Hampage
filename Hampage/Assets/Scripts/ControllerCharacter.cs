@@ -9,8 +9,8 @@ public class ControllerCharacter : MonoBehaviour
     public Transform cam;
 
     public float moveSpeed = 10f;
-    public float jumpForce = 3f;
-    public float gravityScale = -9.81f;
+    public float jumpForce = 2f;
+    public float gravityScale = -20f;
     public float turnSmoothTime = 0.1f;
     float turnSmoothVelocity;
 
