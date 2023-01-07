@@ -29,14 +29,19 @@ public class ControllerCharacter : MonoBehaviour
     float targetAngle;
     bool runTriggered;
     bool jumpTriggered;
+    bool interactTriggered;
+
+    // Interaction
+    List<IInteractable> localInteractables;
 
     void Awake()
     {
         input = new PlayerInput();
         controller = GetComponent<CharacterController>();
+        localInteractables = new List<IInteractable>();
 
-        // The following are adding our methods (On Move,etc) to the delegate for the motion (hence +=)
-        // This essentially makes our methods call-backs, and calls these methods when a condition is met
+        // Adding our methods (On Move,etc) to the delegate for the motion (hence +=)
+        // This makes our methods call-backs, and calls these methods when a condition is met
         // - There are 3 states an input can be in: Started (Button Down), performed (button held), and cancelled (released)
         // - Progress is only applicable to movement as multiple buttons can be held at once. Run and jump are binary so we only need start and stopped.
         input.CharacterControls.Move.started += onMoveInput;
@@ -48,6 +53,9 @@ public class ControllerCharacter : MonoBehaviour
 
         input.CharacterControls.Jump.started += onJumpInput;
         input.CharacterControls.Jump.canceled += onJumpInput;
+
+        // We only care about button-down for interact, so just started state
+        input.CharacterControls.Interact.started += onInteract;
     }
 
     void Update()
@@ -117,12 +125,35 @@ public class ControllerCharacter : MonoBehaviour
             currMovement = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
         }
     }
-    // Callback to be executed on Run update
+    // Callbacks to be executed on input update
     void onRunInput(InputAction.CallbackContext context){
         runTriggered = context.ReadValueAsButton();
     }
-    // Callback to be executed on Jump update
+    
     void onJumpInput(InputAction.CallbackContext context){
         jumpTriggered = context.ReadValueAsButton();
+    }
+
+    void onInteract(InputAction.CallbackContext context){
+        interactTriggered = context.ReadValueAsButton();
+        bool actionPerformed = false;
+
+        //Check if we have any interactables, if so execute the first one
+        if(localInteractables.Count != 0){
+            actionPerformed = localInteractables[0].performAction();
+        }
+
+        Debug.Log( actionPerformed ? "Interacted with " + localInteractables[0] : ( localInteractables.Count == 0 ? " No interactables." : "Interaction Failed"));
+    }
+
+    // Public method allowing interact items to add themself to player's interact list 
+    // Interactables have a switch to determine if they've been added to our list, so we're just concerned with adding it
+    public void registerInteractable(IInteractable interactable){
+        localInteractables.Add(interactable);
+        interactable.registered = true;   
+    }
+    public void unregisterInteractable(IInteractable interactable){
+        localInteractables.Remove(interactable);
+        interactable.registered = false;   
     }
 }
