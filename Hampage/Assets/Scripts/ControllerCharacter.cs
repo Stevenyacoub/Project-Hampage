@@ -6,6 +6,7 @@ using UnityEngine.InputSystem;
 public class ControllerCharacter : MonoBehaviour
 {
     public CharacterController controller;
+    public PlayerManager playerManager;
     public Transform cam;
 
     public float moveSpeed = 10f;
@@ -29,16 +30,12 @@ public class ControllerCharacter : MonoBehaviour
     float targetAngle;
     bool runTriggered;
     bool jumpTriggered;
-    bool interactTriggered;
-
-    // Interaction
-    List<IInteractable> localInteractables;
 
     void Awake()
     {
         input = new PlayerInput();
         controller = GetComponent<CharacterController>();
-        localInteractables = new List<IInteractable>();
+        playerManager = GetComponent<PlayerManager>();
 
         // Adding our methods (On Move,etc) to the delegate for the motion (hence +=)
         // This makes our methods call-backs, and calls these methods when a condition is met
@@ -135,25 +132,7 @@ public class ControllerCharacter : MonoBehaviour
     }
 
     void onInteract(InputAction.CallbackContext context){
-        interactTriggered = context.ReadValueAsButton();
-        bool actionPerformed = false;
-
-        //Check if we have any interactables, if so execute the first one
-        if(localInteractables.Count != 0){
-            actionPerformed = localInteractables[0].performAction();
-        }
-
-        Debug.Log( actionPerformed ? "Interacted with " + localInteractables[0] : ( localInteractables.Count == 0 ? " No interactables." : "Interaction Failed"));
+        playerManager.interact();
     }
 
-    // Public method allowing interact items to add themself to player's interact list 
-    // Interactables have a switch to determine if they've been added to our list, so we're just concerned with adding it
-    public void registerInteractable(IInteractable interactable){
-        localInteractables.Add(interactable);
-        interactable.registered = true;   
-    }
-    public void unregisterInteractable(IInteractable interactable){
-        localInteractables.Remove(interactable);
-        interactable.registered = false;   
-    }
 }
