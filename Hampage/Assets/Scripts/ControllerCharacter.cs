@@ -5,6 +5,7 @@ using UnityEngine.InputSystem;
 
 public class ControllerCharacter : MonoBehaviour
 {
+    private Animator anim;
     public CharacterController controller;
     public PlayerManager playerManager;
     public Transform cam;
@@ -30,12 +31,14 @@ public class ControllerCharacter : MonoBehaviour
     float targetAngle;
     bool runTriggered;
     bool jumpTriggered;
+    bool attackTriggered;
 
     void Awake()
     {
         input = new PlayerInput();
         controller = GetComponent<CharacterController>();
         playerManager = GetComponent<PlayerManager>();
+        anim = GetComponent<Animator>();
 
         // Adding our methods (On Move,etc) to the delegate for the motion (hence +=)
         // This makes our methods call-backs, and calls these methods when a condition is met
@@ -51,8 +54,13 @@ public class ControllerCharacter : MonoBehaviour
         input.CharacterControls.Jump.started += onJumpInput;
         input.CharacterControls.Jump.canceled += onJumpInput;
 
+        //Basic Attack
+        input.CharacterControls.Attack.started += onAttack;
+        input.CharacterControls.Attack.canceled += onAttack;
+
         // We only care about button-down for interact, so just started state
         input.CharacterControls.Interact.started += onInteract;
+
     }
 
     void Update()
@@ -135,4 +143,9 @@ public class ControllerCharacter : MonoBehaviour
         playerManager.interact();
     }
 
+    void onAttack(InputAction.CallbackContext context)
+    {
+        attackTriggered = context.ReadValueAsButton();
+        anim.SetTrigger("WhackInput");
+    }
 }
