@@ -28,12 +28,14 @@ public class MovingPlatform : MonoBehaviour
     }
 
     // Use Lerp to linearly interpolate between the two waypoints
-    void Update()
+    void FixedUpdate()
     {
         _elapsedTime += Time.deltaTime;
 
         float elapsedPercentage = _elapsedTime / _timeToWaypoint;
+        elapsedPercentage= Mathf.SmoothStep(0, 1, elapsedPercentage);
         transform.position = Vector3.Lerp(_previousWaypoint.position,_targetWaypoint.position, elapsedPercentage);
+        //transform.rotation = Quaternion.Lerp(_previousWaypoint.rotation,_targetWaypoint.rotation, elapsedPercentage);
 
         if(elapsedPercentage >= 1){
             TargetNextWaypoint();
@@ -54,5 +56,13 @@ public class MovingPlatform : MonoBehaviour
         float distanceToWaypoint = Vector3.Distance(_previousWaypoint.position, _targetWaypoint.position);
         // Find the timeToWaypoint by dividing the distance by the speed
         _timeToWaypoint = distanceToWaypoint /_speed;
+    }
+    // If a player is detected on the platform make the player a child of the platform
+    private void OnTriggerEnter(Collider other){
+        other.transform.SetParent(transform);
+    }
+    // After player leaves platform remove player as a child 
+    private void OnTriggerExit(Collider other) {
+        other.transform.SetParent(null);
     }
 }
