@@ -73,3 +73,9 @@ crashlytics-build.properties
 
 # For mac
 .DS_Store
+
+#Unused Library Files
+Hampage/Library/
+
+#Temp
+Hampage/Temp/
