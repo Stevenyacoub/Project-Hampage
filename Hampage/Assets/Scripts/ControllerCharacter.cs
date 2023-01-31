@@ -11,7 +11,11 @@ public class ControllerCharacter : MonoBehaviour
     public Transform cam;
 
     public float moveSpeed = 10f;
+    private float initialMoveSpeed = 10f;
+    public float speedBoostCD = 4f;
     public float jumpForce = 2f;
+    private float initialJumpForce = 2f;
+    public float jumpBoostCD = 4f;
     public float gravityScale = -20f;
     public float turnSmoothTime = 0.1f;
     float turnSmoothVelocity;
@@ -19,6 +23,7 @@ public class ControllerCharacter : MonoBehaviour
     public Transform groundCheck;
     public float groundDistance = 0.4f;
     public LayerMask groundMask;
+
 
     //private Vector3 moveDirection;
     Vector3 velocity;
@@ -39,6 +44,8 @@ public class ControllerCharacter : MonoBehaviour
         controller = GetComponent<CharacterController>();
         playerManager = GetComponent<PlayerManager>();
         anim = GetComponent<Animator>();
+        initialMoveSpeed = moveSpeed;
+        initialJumpForce = jumpForce;
 
         // Adding our methods (On Move,etc) to the delegate for the motion (hence +=)
         // This makes our methods call-backs, and calls these methods when a condition is met
@@ -79,22 +86,24 @@ public class ControllerCharacter : MonoBehaviour
         // //If not running or grounded, use normal movement, else use runMultiplier
         // Vector3 moveDir = (!(runTriggered && isGrounded) ? currMovement : new Vector3(currMovement.x * runMultiplier, currMovement.y, currMovement.z * runMultiplier));
         // controller.Move(moveDir * moveSpeed * Time.deltaTime); 
-        
+
         handleGravity();
 
     }
 
-    void handleRotation(){
+    void handleRotation()
+    {
         float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref turnSmoothVelocity, turnSmoothTime);
         transform.rotation = Quaternion.Euler(0f, angle, 0f);
     }
 
-    void handleGravity(){
+    void handleGravity()
+    {
         isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
 
         if (isGrounded && velocity.y < 0)
         {
-            velocity.y = -2f; 
+            velocity.y = -2f;
         }
 
         if (jumpTriggered && isGrounded)
@@ -106,15 +115,18 @@ public class ControllerCharacter : MonoBehaviour
     // -- // -- // USER INPUT
 
     //Enables our input while our object is alive
-    void OnEnable(){
+    void OnEnable()
+    {
         input.CharacterControls.Enable();
     }
     //Disables if averse occurs
-    void OnDisable() {
+    void OnDisable()
+    {
         input.CharacterControls.Disable();
     }
     // Callback to be executed on movement update
-    void onMoveInput(InputAction.CallbackContext context){
+    void onMoveInput(InputAction.CallbackContext context)
+    {
         //Mapping our 2 dimensional movement onto 3 dimensional space (x->x, y->z)
         //InputActions PlayerInput auto-normalizes for us 
         currMovement.x = context.ReadValue<Vector2>().x;
@@ -131,15 +143,18 @@ public class ControllerCharacter : MonoBehaviour
         }
     }
     // Callbacks to be executed on input update
-    void onRunInput(InputAction.CallbackContext context){
+    void onRunInput(InputAction.CallbackContext context)
+    {
         runTriggered = context.ReadValueAsButton();
     }
-    
-    void onJumpInput(InputAction.CallbackContext context){
+
+    void onJumpInput(InputAction.CallbackContext context)
+    {
         jumpTriggered = context.ReadValueAsButton();
     }
 
-    void onInteract(InputAction.CallbackContext context){
+    void onInteract(InputAction.CallbackContext context)
+    {
         playerManager.interact();
     }
 
@@ -148,4 +163,26 @@ public class ControllerCharacter : MonoBehaviour
         attackTriggered = context.ReadValueAsButton();
         anim.SetTrigger("WhackInput");
     }
+
+    private void OnControllerColliderHit(ControllerColliderHit hit)
+    {
+        switch (hit.gameObject.tag)
+        {
+            case "SpeedBoost":
+                moveSpeed = 25f;
+                break;
+
+            case "JumpPad":
+                isGrounded = true;
+                jumpForce = 10f;
+                break;
+
+            case "Ground":
+                moveSpeed = initialMoveSpeed;
+                jumpForce = initialJumpForce;
+                break;
+        }
+    }
 }
+
+
