@@ -77,3 +77,9 @@ Hampage/Library/
 #Temp
 Hampage/Temp/
 
+#Unused Logs
+Hampage/Logs/
+
+#UserSettings
+Hampage/UserSettings/
+
