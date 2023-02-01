@@ -12,18 +12,12 @@ public class InteractBox : MonoBehaviour
         playerManager = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerManager>();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     //Called when a rigidbody enters the collider
     private void OnTriggerEnter(Collider other)
     {
         //Try to get an interactable out of the collider
         // !! - this only works if the collider and the script are on the same gameobject! Not a child or parent
-        if(other.TryGetComponent<IInteractable>(out IInteractable interactable)){
+        if(other.TryGetComponent<Interactable>(out Interactable interactable)){
             
             //We got an interactable!
             //Now try to see if we can cast a ray to it (meaning nothing is in the way)
@@ -32,7 +26,7 @@ public class InteractBox : MonoBehaviour
             if(Physics.Raycast(transform.position, (other.transform.position - transform.position), out RaycastHit hit)){
 
                 //See if the hit object also has an interactable (ignore if not)
-                if(hit.collider.gameObject.TryGetComponent<IInteractable>(out IInteractable hitInteractable)){
+                if(hit.collider.gameObject.TryGetComponent<Interactable>(out Interactable hitInteractable)){
 
                     //If we can reach it and it's not registered
                     if(hitInteractable.Equals(interactable) && !interactable.registered){
@@ -45,13 +39,13 @@ public class InteractBox : MonoBehaviour
 
     //Called while rigidbody is still in collider
     private void OnTriggerStay(Collider other) {
-        if(other.TryGetComponent<IInteractable>(out IInteractable interactable)){
+        if(other.TryGetComponent<Interactable>(out Interactable interactable)){
             
             //Shoot a ray to the object
             if(Physics.Raycast(transform.position, (other.transform.position - transform.position), out RaycastHit hit)){
 
                 //See if the hit object also has an interactable (ignore if not)
-                if(hit.collider.gameObject.TryGetComponent<IInteractable>(out IInteractable hitInteractable)){
+                if(hit.collider.gameObject.TryGetComponent<Interactable>(out Interactable hitInteractable)){
 
                     //If we can reach it and it's not registered
                     if(hitInteractable.Equals(interactable) && !interactable.registered){
@@ -67,7 +61,7 @@ public class InteractBox : MonoBehaviour
 
     //Called when rigidbody leaves the collider
     private void OnTriggerExit(Collider other) {
-        if(other.TryGetComponent<IInteractable>(out IInteractable interactable)){
+        if(other.TryGetComponent<Interactable>(out Interactable interactable)){
             if(interactable.registered){
                playerManager.unregisterInteractable(interactable);
             }
