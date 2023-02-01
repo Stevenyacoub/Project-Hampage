@@ -6,6 +6,8 @@ public class Button : MonoBehaviour, IInteractable, ITrigger
     // This is done so we can use the unity inspector to assign Activatables to triggerables
     [SerializeField]
     private Activatable active;
+    public Canvas interactUI;
+    public Camera mainCam;
 
     public Activatable activatable {
         get {return active;} 
@@ -13,7 +15,26 @@ public class Button : MonoBehaviour, IInteractable, ITrigger
     }
 
     public bool registered { get; set; }
+    bool UIShown;
     
+    void Awake() {
+        interactUI.enabled = false;
+        UIShown = false;
+    }
+
+    void Update() {
+        if(registered & !UIShown){
+            interactUI.enabled = true;
+            UIShown = true;
+        }else if(!registered & UIShown){
+            interactUI.enabled = false;
+            UIShown = false;
+        }
+
+        if(UIShown){
+            interactUI.transform.LookAt(mainCam.transform);
+        }
+    }
 
     public bool activate(){
         if(active != null){
