@@ -1507,7 +1507,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1110243478}
-  m_LocalRotation: {x: 0.0498137, y: 0.0002490724, z: -0.00001242264, w: 0.9987585}
+  m_LocalRotation: {x: 0.0498137, y: 0.0002490681, z: -0.00001242243, w: 0.9987585}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -1585,7 +1585,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1144938789}
-  m_LocalRotation: {x: 0.031638548, y: 0.00024927224, z: -0.000007890561, w: 0.9994994}
+  m_LocalRotation: {x: 0.031638548, y: 0.00024923784, z: -0.000007889474, w: 0.9994994}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -1605,7 +1605,7 @@ GameObject:
   - component: {fileID: 1264671862}
   - component: {fileID: 1264671864}
   m_Layer: 0
-  m_Name: Camera
+  m_Name: UI Camera
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2080,7 +2080,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1408239140}
-  m_LocalRotation: {x: 0.031638548, y: 0.00024928965, z: -0.0000078911135, w: 0.9994994}
+  m_LocalRotation: {x: 0.031638548, y: 0.00024922047, z: -0.000007888923, w: 0.9994994}
   m_LocalPosition: {x: 0.9950124, y: 2, z: -12.999999}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
