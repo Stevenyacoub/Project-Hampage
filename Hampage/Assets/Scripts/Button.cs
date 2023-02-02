@@ -9,13 +9,16 @@ public class Button : MonoBehaviour, IInteractable
     public bool registered { get; set; }
     
     public PlayerManager playerManager;
+    BlockMovement blockMovement;
 
     public bool performAction()
     {
         Debug.Log("Button pressed!");
+        blockMovement = FindObjectOfType<BlockMovement>();
+        blockMovement.OperateDoor();
         return true;
     }
-
+    
     // Unity Methods
 
     //Awake gets called before the scene is finished loading (even before Start()!)
