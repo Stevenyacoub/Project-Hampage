@@ -4,13 +4,127 @@ using UnityEngine;
 
 public class InteractBox : MonoBehaviour
 {
-    public PlayerManager playerManager;
+    // This class enables the player to interact with items and triggers in the world using the interact button
+
+    //list of interactables within range
+    List<Interactable> localInteractables;
+    //the interactable we want to interact with (closest)
+    Interactable priority;
+    //prefab for UI element to be spawned
+    public GameObject interactUIPrefab;
+    //current instance of UI element to manipulate
+    GameObject currentInteractUI;
+    bool UIShown = false;
+    //camera reference for UI rotation
+    public Camera mainCam;
+
+    //height to spawn interact UI
+    public float UIheight = 0.5f;
 
     // Start is called before the first frame update
     void Awake()
     {
-        playerManager = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerManager>();
+        // Instantiate interactable list
+        localInteractables = new List<Interactable>();
+        // set our interact UI to null
+        currentInteractUI = null;
+        // make an instance of our UI prefab, and hide it
+        currentInteractUI = Instantiate(interactUIPrefab, Vector3.zero, Quaternion.identity);
+        currentInteractUI.SetActive(false);
     }
+
+    // Update is called every frame
+    void Update(){
+        CheckForInteractions();
+        if(UIShown)
+            RotateUI();
+    }
+    
+    // -- // Interaction Logic
+
+    // This checks to see if there are any interactables near us
+    // if so, it selects a priority based on distance
+    // It also displays the UI for the priority interactable, and hides the UI if no priority exists
+    void CheckForInteractions(){
+        if(localInteractables.Count != 0){
+            // If we have more than one
+            if(localInteractables.Count > 1){
+                FindClosestInteractable();
+                ShowUIForInteractable(priority);
+            }else{
+                priority = localInteractables[0];
+                ShowUIForInteractable(priority);
+            }
+        }else{
+            priority = null;
+            if(UIShown)
+                HideInteractUI();
+        }
+    }
+
+    // This gets called when the user presses the interact button (PC: "E")
+    // Interacts with our priority interactable
+    public void interact(){
+        bool actionPerformed = false;
+
+        //Check if we have a priority interactable, execute if so
+        if(priority){
+            actionPerformed = priority.performAction();
+        }
+    }
+
+    // Finds the closest interactable and sets it as our priority (when multiple are present)
+    void FindClosestInteractable(){
+        // Setting the leastDist to distance between us and first object
+        float leastDist = Vector3.Distance(this.gameObject.transform.position, localInteractables[0].gameObject.transform.position);
+        // Temporarily setting that one as the priority
+        priority = localInteractables[0];
+        // Searching for a closer one using a dynamic loop
+        foreach (var inter in localInteractables)
+        {
+            float thisDist = Vector3.Distance(this.gameObject.transform.position, inter.gameObject.transform.position);
+            if( thisDist < leastDist){
+                priority = inter;
+                leastDist = thisDist;
+            }
+        }
+    }
+
+    // Hide the UI of non-prioritized interactables
+    void RotateUI(){
+        currentInteractUI.transform.LookAt(mainCam.transform);
+    }
+
+    // Spawn an interact UI at the given position
+    void ShowUIForInteractable(Interactable interactable){
+        // show our UI element, and take note
+        currentInteractUI.SetActive(true);  
+        UIShown = true;
+
+        // Move the UI to where the Interactable is located, with height offset
+        currentInteractUI.transform.position = interactable.transform.position + new Vector3(0, UIheight, 0);
+    }
+
+    void HideInteractUI(){
+        currentInteractUI.SetActive(false);
+        UIShown = false;
+    }
+
+    // Public methods allowing interactable items to add and remove themself from player's interact list 
+
+    // Lets an interactable register
+    public void RegisterInteractable(Interactable interactable){
+        localInteractables.Add(interactable);
+        interactable.registered = true;   
+    }
+
+    // Unregisters an interactable, while hiding it's UI
+    public void UnregisterInteractable(Interactable interactable){
+        localInteractables.Remove(interactable);
+        interactable.registered = false;
+    }
+
+    // -- // Collision with Interactables
 
     //Called when a rigidbody enters the collider
     private void OnTriggerEnter(Collider other)
@@ -30,7 +144,7 @@ public class InteractBox : MonoBehaviour
 
                     //If we can reach it and it's not registered
                     if(hitInteractable.Equals(interactable) && !interactable.registered){
-                        playerManager.registerInteractable(interactable);
+                        RegisterInteractable(interactable);
                     }
                 }   
             }  
@@ -49,10 +163,10 @@ public class InteractBox : MonoBehaviour
 
                     //If we can reach it and it's not registered
                     if(hitInteractable.Equals(interactable) && !interactable.registered){
-                        playerManager.registerInteractable(interactable);
+                        RegisterInteractable(interactable);
                     // Or if we can't reach but it is...
                     }else if(!hitInteractable.Equals(interactable) && interactable.registered){
-                        playerManager.unregisterInteractable(interactable);
+                        UnregisterInteractable(interactable);
                     }
                 }   
             }        
@@ -63,7 +177,7 @@ public class InteractBox : MonoBehaviour
     private void OnTriggerExit(Collider other) {
         if(other.TryGetComponent<Interactable>(out Interactable interactable)){
             if(interactable.registered){
-               playerManager.unregisterInteractable(interactable);
+               UnregisterInteractable(interactable);
             }
         }
     }
