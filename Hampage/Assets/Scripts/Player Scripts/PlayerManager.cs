@@ -4,14 +4,9 @@ using UnityEngine;
 
 public class PlayerManager : MonoBehaviour
 {
-    //Class used to manage player data not related to input
+    //Class used to manage player data not related to input or interaction
     //For input based management, see ControllerCharacter
-
-    // For Interaction:
-    // - localInteractables is a list of interactables within range
-    // - priority is the interactable we want (closest to us) (for use when multiple interactables are present)
-    List<Interactable> localInteractables;
-    Interactable priority;
+    //For interaction controls, see InteractBox
 
     // A list of "collected" items
     // !! TODO: Items currently delete themselves, so the items themselves can't be accessed!!
@@ -21,13 +16,13 @@ public class PlayerManager : MonoBehaviour
 
     // Awake gets called before the first frame update
     void Awake(){
-        localInteractables = new List<Interactable>();
+        // Instantiating an empty inventory
         inventory = new List<Item>();
     }
 
     // Update gets called each frame update
     void Update(){
-        CheckForInteractions();
+        // Do something
     }
 
     // Method to add items to inventory
@@ -37,82 +32,5 @@ public class PlayerManager : MonoBehaviour
         inventory.Add(item);
         Debug.Log("Inventory Count:" + inventory.Count);
     }
-
-    // -- // Interaction Logic
-
-    // This checks to see if there are any interactables near us
-    // if so, it selects a priority based on distance
-    // It also displays the UI for the priority interactable
-    void CheckForInteractions(){
-        if(localInteractables.Count != 0){
-            // If we have more than one
-            if(localInteractables.Count > 1){
-                FindClosestInteractable();
-                priority.ShowUI();
-                HideNotPriority();
-            }else{
-                // If there's only one
-                priority = localInteractables[0];
-                priority.ShowUI();
-            }
-        }else{
-            priority = null;
-        }
-    }
-
-    // This gets called when the user presses the interact button (PC: "E")
-    // Interacts with our priority interactab;e
-    public void interact(){
-        bool actionPerformed = false;
-
-        //Check if we have a priority interactable, execute if so
-        if(priority){
-            actionPerformed = priority.performAction();
-        }
-    }
-
-    // Finds the closest interactable and sets it as our priority (when multiple are present)
-    void FindClosestInteractable(){
-        // Setting the leastDist to distance between us and first object
-        float leastDist = Vector3.Distance(this.gameObject.transform.position, localInteractables[0].gameObject.transform.position);
-        // Temporarily setting that one as the priority
-        priority = localInteractables[0];
-        // Searching for a closer one using a dynamic loop
-        foreach (var inter in localInteractables)
-        {
-            float thisDist = Vector3.Distance(this.gameObject.transform.position, inter.gameObject.transform.position);
-            if( thisDist < leastDist){
-                priority = inter;
-                leastDist = thisDist;
-            }
-        }
-    }
-
-    // Hide the UI of non-prioritized interactables
-    void HideNotPriority(){
-        foreach (var inter in localInteractables)
-        {
-            if (!inter.Equals(priority)){
-                inter.HideUI();
-            }
-        }
-    }
-
-    // Public methods allowing interactable items to add and remove themself from player's interact list 
-
-    // Lets an interactable register
-    public void registerInteractable(Interactable interactable){
-        localInteractables.Add(interactable);
-        interactable.registered = true;   
-    }
-
-    // Unregisters an interactable, while hiding it's UI
-    public void unregisterInteractable(Interactable interactable){
-        localInteractables.Remove(interactable);
-        interactable.registered = false;
-        interactable.HideUI();
-    }
-
-    
 
 }

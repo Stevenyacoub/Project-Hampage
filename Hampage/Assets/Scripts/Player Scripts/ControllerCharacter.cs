@@ -8,6 +8,7 @@ public class ControllerCharacter : MonoBehaviour
     private Animator anim;
     public CharacterController controller;
     public PlayerManager playerManager;
+    public InteractBox interactBox;
     public Transform cam;
 
     public float moveSpeed = 10f;
@@ -140,7 +141,7 @@ public class ControllerCharacter : MonoBehaviour
     }
 
     void onInteract(InputAction.CallbackContext context){
-        playerManager.interact();
+        interactBox.interact();
     }
 
     void onAttack(InputAction.CallbackContext context)
