@@ -47,7 +47,7 @@ public class InteractBox : MonoBehaviour
     // It also displays the UI for the priority interactable, and hides the UI if no priority exists
     void CheckForInteractions(){
         if(localInteractables.Count != 0){
-            // If we have more than one
+            // If we have atleast one
             if(localInteractables.Count > 1){
                 FindClosestInteractable();
                 ShowUIForInteractable(priority);
