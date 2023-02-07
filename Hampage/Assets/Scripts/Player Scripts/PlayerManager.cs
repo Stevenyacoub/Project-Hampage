@@ -4,36 +4,33 @@ using UnityEngine;
 
 public class PlayerManager : MonoBehaviour
 {
-    //Class used to manage player data not related to input
+    //Class used to manage player data not related to input or interaction
     //For input based management, see ControllerCharacter
+    //For interaction controls, see InteractBox
 
-    List<IInteractable> localInteractables;
+    // A list of "collected" items
+    // !! TODO: Items currently delete themselves, so the items themselves can't be accessed!!
+    // !! We need to build a inventory version of items when they're collected, this is only a temporary demonstration!!!
+    List<Item> inventory;
 
+
+    // Awake gets called before the first frame update
     void Awake(){
-        localInteractables = new List<IInteractable>();
+        // Instantiating an empty inventory
+        inventory = new List<Item>();
     }
 
-    // Interaction Logic:
-
-    public void interact(){
-        bool actionPerformed = false;
-
-        //Check if we have any interactables, if so execute the first one
-        if(localInteractables.Count != 0){
-            actionPerformed = localInteractables[0].performAction();
-        }
-
-        //Debug.Log( actionPerformed ? "Interacted with " + localInteractables[0] : ( localInteractables.Count == 0 ? " No interactables." : "Interaction Failed"));
+    // Update gets called each frame update
+    void Update(){
+        // Do something
     }
 
-    // Public methods allowing interactable items to add and remove themself from player's interact list 
-    public void registerInteractable(IInteractable interactable){
-        localInteractables.Add(interactable);
-        interactable.registered = true;   
-    }
-    public void unregisterInteractable(IInteractable interactable){
-        localInteractables.Remove(interactable);
-        interactable.registered = false;   
+    // Method to add items to inventory
+    // !! This is only temporary, as items destroy themselves when collected
+    // TODO: Refactor to use an inventory version of items
+    public void addToInventory(Item item){
+        inventory.Add(item);
+        Debug.Log("Inventory Count:" + inventory.Count);
     }
 
 }
