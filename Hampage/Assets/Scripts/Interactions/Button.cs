@@ -1,12 +1,14 @@
 using UnityEngine;
 
-public class Button : MonoBehaviour, IInteractable, ITrigger
+public class Button : Interactable, ITrigger
 {
-    //We have a private member that our accessor interfaces with
-    // This is done so we can use the unity inspector to assign Activatables to triggerables
+    //Example of an Interactable and ITrigger Object
+    // This button can be interacted with and trigger an activatable
+    
+    // For ITrigger:
     [SerializeField]
     private Activatable active;
-
+    
     public Activatable activatable {
         get {return active;} 
         set {active = value;} 
@@ -27,7 +29,8 @@ public class Button : MonoBehaviour, IInteractable, ITrigger
         }
     }
 
-    public bool performAction(){
+    // Button's unique implementation, activates it's activatable and notifies via console
+    public override bool performAction(){
         //Since this button is also a trigger, it's perform action is to activate its activatable
 
         Debug.Log("Button pressed!");
