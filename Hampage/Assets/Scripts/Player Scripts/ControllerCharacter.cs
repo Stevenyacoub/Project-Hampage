@@ -119,11 +119,13 @@ public class ControllerCharacter : MonoBehaviour
 
     //Enables our input while our object is alive
     void OnEnable(){
-        input.CharacterControls.Enable();
+        if(input != null)
+            input.CharacterControls.Enable();
     }
     //Disables if averse occurs
     void OnDisable() {
-        input.CharacterControls.Disable();
+        if(input != null)
+            input.CharacterControls.Disable();
     }
     // Callback to be executed on movement update
     void onMoveInput(InputAction.CallbackContext context){
