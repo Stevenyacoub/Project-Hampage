@@ -1,8 +1,11 @@
 fileFormatVersion: 2
-guid: 601d14af8b39f49bb8752bf501d0103b
+guid: 866a89f8cc89e42bcbb24ca2d5835b32
 ModelImporter:
   serializedVersion: 21300
-  internalIDToNameTable: []
+  internalIDToNameTable:
+  - first:
+      74: -623603649343465320
+    second: Scene
   externalObjects: {}
   materials:
     materialImportMode: 2
@@ -75,8 +78,7 @@ ModelImporter:
     legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 0
     blendShapeNormalImportMode: 1
     normalSmoothingSource: 0
-  referencedClips:
-  - 500a491bdb8812e4e8fdd6826658a7b5
+  referencedClips: []
   importAnimation: 1
   humanDescription:
     serializedVersion: 3
