@@ -4,6 +4,8 @@
 TagManager:
   serializedVersion: 2
   tags:
+  - Moveable
+  - Door(1)
   - Player Attack
   - Enemy
   layers:

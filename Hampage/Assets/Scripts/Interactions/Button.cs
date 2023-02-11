@@ -26,7 +26,7 @@ public class Button : Interactable, ITrigger
     // Button's unique implementation, activates it's activatable and notifies via console
     public override bool performAction(){
         //Since this button is also a trigger, it's perform action is to activate its activatable
-
+        
         Debug.Log("Button pressed!");
         return activate();
     }
