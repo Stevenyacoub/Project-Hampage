@@ -6,6 +6,8 @@ TagManager:
   tags:
   - Moveable
   - Door(1)
+  - Player Attack
+  - Enemy
   layers:
   - Default
   - TransparentFX
