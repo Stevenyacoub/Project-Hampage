@@ -13,7 +13,7 @@ public class Wormy : MonoBehaviour, Damageable
         if (healthPoints <= 0)
         {
             Debug.Log("Worm is dead!");
-            Destroy(GetComponent<GameObject>());
+            Destroy(gameObject);
         }
         else
         {
