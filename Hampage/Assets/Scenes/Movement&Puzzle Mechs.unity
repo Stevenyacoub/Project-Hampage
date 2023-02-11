@@ -289,7 +289,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 194583502}
-  m_LocalRotation: {x: 0.013500972, y: 0.00024936843, z: -0.0000033670224, w: 0.99990886}
+  m_LocalRotation: {x: 0.013500972, y: 0.00024933397, z: -0.0000033665574, w: 0.99990886}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -485,7 +485,6 @@ GameObject:
   - component: {fileID: 511711669}
   - component: {fileID: 511711668}
   - component: {fileID: 511711667}
-  - component: {fileID: 511711671}
   m_Layer: 6
   m_Name: JumpPad
   m_TagString: JumpPad
@@ -526,7 +525,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 351d6372d9232cd45a8cb77ce146fbe9, type: 2}
+  - {fileID: 2100000, guid: 8c27f14c988415e4db29c14f1ace6aba, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -571,21 +570,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &511711671
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 511711666}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3f7e77c5d7ff6a64fb1c531b1aa4270c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  player: {fileID: 1595173249}
-  direction: {x: 0, y: 0, z: 0}
-  jumpforce: 10
 --- !u!1 &514194186
 GameObject:
   m_ObjectHideFlags: 3
@@ -1512,7 +1496,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 6d3cdf63ce8b04d4188d476b65d04511, type: 2}
+  - {fileID: 2100000, guid: 1248aca7c8b6fa04ca8a4bfdcb5af53e, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
