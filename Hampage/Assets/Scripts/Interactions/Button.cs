@@ -4,7 +4,7 @@ public class Button : Interactable, ITrigger
 {
     // Pair-Programmed by Giovanni Quevedo and Devin Elmore
     
-    // Class for an interactable button that can trigger puzzle elements
+    // -- Buttons are ITriggers that can be interacted with
     
     // For ITrigger:
     [SerializeField]

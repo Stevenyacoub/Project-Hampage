@@ -4,14 +4,23 @@ using UnityEngine;
 
 public class DirtPit : Interactable
 {
+    // Created by Giovanni Quevedo
+    // -- Dirt pits act like tunnels, allowing a player to enter one side 
+    //  - and dig to the next
 
     public DirtPit partnerPit;
     public GameObject player;
     private IEnumerator waitForSpawn;
     public InteractBox interactBox;
 
+    // Variables for tunneling
+    float startTime;
+    bool doAnimate = false;
+    Vector3 endPos;
+    // Adjustable time for how long tunnel takes traverse
     public float tunnelTime = 1.5f;
     
+    // When interacted, tries to tunnel player to a partner. Returns false if none exist
     public override bool performAction()
     {
         if(!partnerPit){
@@ -23,22 +32,25 @@ public class DirtPit : Interactable
     }
 
     // Awake is called before the first frame update
+    // -- Set our variables, and update our partner pit (if it existss)
     void Awake()
     {
         player = GameObject.FindGameObjectWithTag("Player");
         interactBox = player.transform.Find("InteractBox").GetComponent<InteractBox>();
         // If our partner was assigned via inspector
         if(partnerPit){
-            //If they don't have a pit instantiated
+            //If they don't have a reference to us, set it
             if(!partnerPit.partnerPit){
                 partnerPit.partnerPit = this;
             }
         }else{
+            // TO-DO: Test if this is necessary
             partnerPit = null;
         }
     }
 
     // Update is called once per frame
+    // -- Handle the camera movement (animation) if it's enabled 
     void Update()
     {
         if(doAnimate)
@@ -71,11 +83,7 @@ public class DirtPit : Interactable
         return true;
     }
 
-    // WIP
-    float speed = 5f;
-    float startTime;
-    bool doAnimate = false;
-    Vector3 endPos;
+
 
 
     // WIP

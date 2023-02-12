@@ -4,7 +4,8 @@ using UnityEngine;
 
 public interface ITrigger
 {
-    // Triggers are puzzle elements that can activate others (activatables)
+    // Created by Giovanni Quevedo
+    // -- Triggers are puzzle elements that can activate others (activatables)
     Activatable activatable {get;set;}
     public bool activate();
     

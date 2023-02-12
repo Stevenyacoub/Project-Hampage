@@ -5,12 +5,11 @@ using UnityEngine;
 public abstract class Interactable : MonoBehaviour
 {
 
-    // Base Interactable class
-    // All Interactables "performAction" when interacted with
+    // Created by Giovanni Quevedo
+    // -- All Interactables "performAction" when interacted with
 
-    // An interactable is registered if the player is within interaction distance 
+    // An interactable is registered if the player is within player's Interact hitbox 
     public bool registered { get; set; }
-    
     
     // Abstract method for all children of Interactable
     public abstract bool performAction();

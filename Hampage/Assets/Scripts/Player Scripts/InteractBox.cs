@@ -4,7 +4,9 @@ using UnityEngine;
 
 public class InteractBox : MonoBehaviour
 {
-    // This class enables the player to interact with items and triggers in the world using the interact button
+    // Created by Giovanni Quevedo
+    // -- This class enables the player to interact with items and triggers in the world using the interact button
+    // -- The InteractBox is the hitbox that handles the interaction system, and acts as the players interaction range
 
     //list of interactables within range
     List<Interactable> localInteractables;
@@ -34,6 +36,7 @@ public class InteractBox : MonoBehaviour
     }
 
     // Update is called every frame
+    // - Constantly check for interactions and show UI if needed
     void Update(){
         CheckForInteractions();
         if(UIShown)
@@ -90,12 +93,12 @@ public class InteractBox : MonoBehaviour
         }
     }
 
-    // Hide the UI of non-prioritized interactables
+    // Face UI to the camera
     void RotateUI(){
         currentInteractUI.transform.LookAt(mainCam.transform);
     }
 
-    // Spawn an interact UI at the given position
+    // Activate our interact UI at the given position
     void ShowUIForInteractable(Interactable interactable){
         // show our UI element, and take note
         currentInteractUI.SetActive(true);  
@@ -105,12 +108,13 @@ public class InteractBox : MonoBehaviour
         currentInteractUI.transform.position = interactable.transform.position + new Vector3(0, UIheight, 0);
     }
 
+    // Hide UI
     void HideInteractUI(){
         currentInteractUI.SetActive(false);
         UIShown = false;
     }
 
-    // Public methods allowing interactable items to add and remove themself from player's interact list 
+    // -- // Public methods allowing interactable items to add and remove themself from player's interact list 
 
     // Lets an interactable register
     public void RegisterInteractable(Interactable interactable){
