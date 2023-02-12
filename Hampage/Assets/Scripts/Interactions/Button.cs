@@ -2,18 +2,21 @@ using UnityEngine;
 
 public class Button : Interactable, ITrigger
 {
-    //Example of an Interactable and ITrigger Object
-    // This button can be interacted with and trigger an activatable
+    // Pair-Programmed by Giovanni Quevedo and Devin Elmore
+    
+    // Class for an interactable button that can trigger puzzle elements
     
     // For ITrigger:
     [SerializeField]
     private Activatable active;
     
+    // Accessors for Activatable
     public Activatable activatable {
         get {return active;} 
         set {active = value;} 
     }
 
+    // Activate our activatable if we have one, if not return false
     public bool activate(){
         if(active != null){
             return active.startActivation(); 
@@ -26,7 +29,6 @@ public class Button : Interactable, ITrigger
     // Button's unique implementation, activates it's activatable and notifies via console
     public override bool performAction(){
         //Since this button is also a trigger, it's perform action is to activate its activatable
-        
         Debug.Log("Button pressed!");
         return activate();
     }
