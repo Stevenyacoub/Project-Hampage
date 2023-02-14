@@ -97,15 +97,19 @@ public class ControllerCharacter : MonoBehaviour
         transform.rotation = Quaternion.Euler(0f, angle, 0f);
     }
 
+    
+    //checks if the player is grounded and if they player is grounded they are able to jump
     void handleGravity()
     {
+        //checks transform in the player to detect if the player is touching the ground
         isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
 
+        //apply a constant value down when player is grounded
         if (isGrounded && velocity.y < 0)
         {
             velocity.y = -2f;
         }
-
+        //if jump input is pressed and player is grounded the player will jump
         if (jumpTriggered && isGrounded)
         {
             velocity.y = Mathf.Sqrt(jumpForce * -2f * gravityScale);
@@ -131,7 +135,8 @@ public class ControllerCharacter : MonoBehaviour
         //InputActions PlayerInput auto-normalizes for us 
         currMovement.x = context.ReadValue<Vector2>().x;
         currMovement.z = context.ReadValue<Vector2>().y;
-
+ 
+        //Alan
         //Only if our movement is above a threshold, take camera into consideration when chosing move direction
         if (currMovement.magnitude >= 0.1f)
         {
@@ -139,6 +144,7 @@ public class ControllerCharacter : MonoBehaviour
             float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref turnSmoothVelocity, turnSmoothTime);
             transform.rotation = Quaternion.Euler(0f, angle, 0f);
 
+            //applies movement relative to the camera
             currMovement = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
         }
     }
@@ -164,19 +170,26 @@ public class ControllerCharacter : MonoBehaviour
         anim.SetTrigger("WhackInput");
     }
 
+
+    //Alan
+    //enters when player colliedes with object
     private void OnControllerColliderHit(ControllerColliderHit hit)
     {
+        //checks to see the tag of the object collided with
         switch (hit.gameObject.tag)
         {
+            //if tag is 'SpeedBoost" change the player speed
             case "SpeedBoost":
                 moveSpeed = 25f;
                 break;
 
+            //if tag is 'JumpPad' change the player jump force
             case "JumpPad":
                 isGrounded = true;
                 jumpForce = 10f;
                 break;
 
+            //if tag is 'Ground' return moveSpeed and jumpForce to original values
             case "Ground":
                 moveSpeed = initialMoveSpeed;
                 jumpForce = initialJumpForce;
