@@ -4,9 +4,10 @@ using UnityEngine;
 
 public class PlayerManager : MonoBehaviour
 {
-    //Class used to manage player data not related to input or interaction
-    //For input based management, see ControllerCharacter
-    //For interaction controls, see InteractBox
+    // Created by Giovanni Quevedo
+    // -- Class used to manage player data not related to input or interaction
+    // (i) For input based management, see ControllerCharacter
+    // (i) For interaction controls, see InteractBox
 
     // A list of "collected" items
     // !! TODO: Items currently delete themselves, so the items themselves can't be accessed!!

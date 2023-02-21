@@ -21,6 +21,10 @@ public class ControllerCharacter : MonoBehaviour
     public float groundDistance = 0.4f;
     public LayerMask groundMask;
 
+    public float knockbackForce = 1f;
+    public float knockbackTime = 1f;
+    private float knockbackCounter;
+
     //private Vector3 moveDirection;
     Vector3 velocity;
     bool isGrounded;
@@ -71,16 +75,23 @@ public class ControllerCharacter : MonoBehaviour
         controller.Move(velocity * Time.deltaTime);
 
         handleRotation();
-
-        //If not running or grounded, use normal movement, else use runMultiplier
-        Vector3 moveDir = (!(runTriggered && isGrounded) ? currMovement : new Vector3(currMovement.x * runMultiplier, currMovement.y, currMovement.z * runMultiplier));
-        controller.Move(moveDir * moveSpeed * Time.deltaTime);
-
-        //Commenting out '&& isGrounded' gives us a pseudo-dash that's fun but not practical. Comment out above and uncomment below to try:
-        // //If not running or grounded, use normal movement, else use runMultiplier
-        // Vector3 moveDir = (!(runTriggered && isGrounded) ? currMovement : new Vector3(currMovement.x * runMultiplier, currMovement.y, currMovement.z * runMultiplier));
-        // controller.Move(moveDir * moveSpeed * Time.deltaTime); 
         
+        //if(knockbackCounter <= 0)
+        //{
+            //If not running or grounded, use normal movement, else use runMultiplier
+            Vector3 moveDir = (!(runTriggered && isGrounded) ? currMovement : new Vector3(currMovement.x * runMultiplier, currMovement.y, currMovement.z * runMultiplier));
+            controller.Move(moveDir * moveSpeed * Time.deltaTime);
+
+            //Commenting out '&& isGrounded' gives us a pseudo-dash that's fun but not practical. Comment out above and uncomment below to try:
+            // //If not running or grounded, use normal movement, else use runMultiplier
+            // Vector3 moveDir = (!(runTriggered && isGrounded) ? currMovement : new Vector3(currMovement.x * runMultiplier, currMovement.y, currMovement.z * runMultiplier));
+            // controller.Move(moveDir * moveSpeed * Time.deltaTime); 
+        //}
+        //else
+        //{
+            //knockbackCounter -= Time.deltaTime;
+        //}
+
         handleGravity();
 
     }
@@ -108,11 +119,13 @@ public class ControllerCharacter : MonoBehaviour
 
     //Enables our input while our object is alive
     void OnEnable(){
-        input.CharacterControls.Enable();
+        if(input != null)
+            input.CharacterControls.Enable();
     }
     //Disables if averse occurs
     void OnDisable() {
-        input.CharacterControls.Disable();
+        if(input != null)
+            input.CharacterControls.Disable();
     }
     // Callback to be executed on movement update
     void onMoveInput(InputAction.CallbackContext context){
@@ -149,4 +162,11 @@ public class ControllerCharacter : MonoBehaviour
         attackTriggered = context.ReadValueAsButton();
         anim.SetTrigger("WhackInput");
     }
+
+/*    public void Knockback(Vector3 direction)
+    {
+        knockbackCounter = knockbackTime;
+
+        currMovement = direction * knockbackForce;
+    }*/
 }
