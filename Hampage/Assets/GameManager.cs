@@ -11,10 +11,14 @@ public class GameManager : MonoBehaviour
     // Class to manage level state & progression
 
     List<IObjective> levelObjectives;
-    
+    public UISystem UI;
+    GameObject player;
+
+    // Awake is called before the first frame update
     private void Awake() {
         //Get all objectives on our gameobject
         levelObjectives = transform.GetComponentsInChildren<IObjective>().ToList();
+        player = GameObject.FindGameObjectWithTag("Player");
     }
 
     // Called when a player steps on a level exit
@@ -43,6 +47,7 @@ public class GameManager : MonoBehaviour
 
     }
 
+    // Try to level up if we can
     void NextLevel(){
         int nextSceneIndex = SceneManager.GetActiveScene().buildIndex + 1;
         int sceneCount = SceneManager.sceneCountInBuildSettings;
@@ -50,6 +55,22 @@ public class GameManager : MonoBehaviour
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
         else
             Debug.Log("Scene index of " + nextSceneIndex + " out ouf bounds, build only has " + sceneCount + " scenes!");
+    }
+
+    // Restart current level
+    public void RestartLevel(){
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+
+    // Load main menu
+    public void MainMenu(){
+        SceneManager.LoadScene(0);
+    }
+
+    // Show TimesUp ui, and stop taking input
+    public void TimesUp(){
+        UI.ShowTimesUp();
+        player.GetComponent<ControllerCharacter>().enabled = false;
     }
    
 }

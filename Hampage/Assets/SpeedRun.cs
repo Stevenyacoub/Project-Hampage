@@ -8,18 +8,15 @@ public class SpeedRun : MonoBehaviour, IObjective
     [field: SerializeField]
     float waitTime = 5;
     public bool complete { get; set; }
+    GameManager gameMan;
 
+    // Awake is called on setup
     private void Awake() {
         // We start complete, and become uncomplete if the timer runs out
         complete = true;
         var timer = Timer(waitTime);
         StartCoroutine(timer);
-    }
-
-
-    private void Update() {
-        if(complete)
-            UpdateStatus();
+        gameMan = transform.parent.GetComponent<GameManager>();
     }
 
     // Called when a condition a
@@ -31,5 +28,6 @@ public class SpeedRun : MonoBehaviour, IObjective
     {
         yield return new WaitForSeconds(waitTime - 0.5f);
         Debug.Log("time's up!");
+        gameMan.TimesUp();
     }
 }
