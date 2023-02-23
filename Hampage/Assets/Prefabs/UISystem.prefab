@@ -115,6 +115,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   timesUpScreen: {fileID: 7665538399790302816}
+  restartButton: {fileID: 7665538399790951084}
+  mainMenuButton: {fileID: 7665538400253817339}
 --- !u!1 &7665538399790302816
 GameObject:
   m_ObjectHideFlags: 0
