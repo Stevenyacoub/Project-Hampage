@@ -1,17 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Security.Cryptography;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class ControllerCharacter : MonoBehaviour
+public class HamsterBallController : MonoBehaviour
 {
     private Animator anim;
     public CharacterController controller;
-    public PlayerManager playerManager;
-    public InteractBox interactBox;
     public Transform cam;
-    public PlayerStateManager stateManager;
-    
 
     public float moveSpeed = 10f;
     public float jumpForce = 2f;
@@ -44,9 +41,8 @@ public class ControllerCharacter : MonoBehaviour
     {
         input = new PlayerInput();
         controller = GetComponent<CharacterController>();
-        playerManager = GetComponent<PlayerManager>();
         anim = GetComponent<Animator>();
-        stateManager = GetComponent<PlayerStateManager>();
+        
 
         // Adding our methods (On Move,etc) to the delegate for the motion (hence +=)
         // This makes our methods call-backs, and calls these methods when a condition is met
@@ -62,12 +58,6 @@ public class ControllerCharacter : MonoBehaviour
         input.CharacterControls.Jump.started += onJumpInput;
         input.CharacterControls.Jump.canceled += onJumpInput;
 
-        //Basic Attack
-        input.CharacterControls.Attack.started += onAttack;
-        input.CharacterControls.Attack.canceled += onAttack;
-
-        // We only care about button-down for interact, so just started state
-        input.CharacterControls.Interact.started += onInteract;
 
     }
 
@@ -78,38 +68,30 @@ public class ControllerCharacter : MonoBehaviour
         controller.Move(velocity * Time.deltaTime);
 
         handleRotation();
-        
-        //if(knockbackCounter <= 0)
-        //{
-            //If not running or grounded, use normal movement, else use runMultiplier
-            Vector3 moveDir = (!(runTriggered && isGrounded) ? currMovement : new Vector3(currMovement.x * runMultiplier, currMovement.y, currMovement.z * runMultiplier));
-            controller.Move(moveDir * moveSpeed * Time.deltaTime);
 
-            //Commenting out '&& isGrounded' gives us a pseudo-dash that's fun but not practical. Comment out above and uncomment below to try:
-            // //If not running or grounded, use normal movement, else use runMultiplier
-            // Vector3 moveDir = (!(runTriggered && isGrounded) ? currMovement : new Vector3(currMovement.x * runMultiplier, currMovement.y, currMovement.z * runMultiplier));
-            // controller.Move(moveDir * moveSpeed * Time.deltaTime); 
-        //}
-        //else
-        //{
-            //knockbackCounter -= Time.deltaTime;
-        //}
+        
+        //If not running or grounded, use normal movement, else use runMultiplier
+        Vector3 moveDir = (!(runTriggered && isGrounded) ? currMovement : new Vector3(currMovement.x * runMultiplier, currMovement.y, currMovement.z * runMultiplier));
+        controller.Move(moveDir * moveSpeed * Time.deltaTime);
+
 
         handleGravity();
 
     }
 
-    void handleRotation(){
+    void handleRotation()
+    {
         float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref turnSmoothVelocity, turnSmoothTime);
         transform.rotation = Quaternion.Euler(0f, angle, 0f);
     }
 
-    void handleGravity(){
+    void handleGravity()
+    {
         isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
 
         if (isGrounded && velocity.y < 0)
         {
-            velocity.y = -2f; 
+            velocity.y = -2f;
         }
 
         if (jumpTriggered && isGrounded)
@@ -121,17 +103,20 @@ public class ControllerCharacter : MonoBehaviour
     // -- // -- // USER INPUT
 
     //Enables our input while our object is alive
-    void OnEnable(){
-        if(input != null)
+    void OnEnable()
+    {
+        if (input != null)
             input.CharacterControls.Enable();
     }
     //Disables if averse occurs
-    void OnDisable() {
-        if(input != null)
+    void OnDisable()
+    {
+        if (input != null)
             input.CharacterControls.Disable();
     }
     // Callback to be executed on movement update
-    void onMoveInput(InputAction.CallbackContext context){
+    void onMoveInput(InputAction.CallbackContext context)
+    {
         //Mapping our 2 dimensional movement onto 3 dimensional space (x->x, y->z)
         //InputActions PlayerInput auto-normalizes for us 
         currMovement.x = context.ReadValue<Vector2>().x;
@@ -148,28 +133,17 @@ public class ControllerCharacter : MonoBehaviour
         }
     }
     // Callbacks to be executed on input update
-    void onRunInput(InputAction.CallbackContext context){
+    void onRunInput(InputAction.CallbackContext context)
+    {
         runTriggered = context.ReadValueAsButton();
     }
-    
-    void onJumpInput(InputAction.CallbackContext context){
+
+    void onJumpInput(InputAction.CallbackContext context)
+    {
         jumpTriggered = context.ReadValueAsButton();
     }
 
-    void onInteract(InputAction.CallbackContext context){
-        interactBox.interact();
-    }
-
-    void onAttack(InputAction.CallbackContext context)
-    {
-        attackTriggered = context.ReadValueAsButton();
-        anim.SetTrigger("WhackInput");
-    }
-
-/*    public void Knockback(Vector3 direction)
-    {
-        knockbackCounter = knockbackTime;
-
-        currMovement = direction * knockbackForce;
-    }*/
+    
 }
+
+
