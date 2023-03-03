@@ -1,6 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
-//using System.Diagnostics;
+
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -80,7 +80,14 @@ public class NewHamsterBallController : MonoBehaviour
 
     public virtual void handleGravity()
     {
+        
+        /*Debug.Log(groundCheck);
+        Debug.Log(groundDistance);
+        Debug.Log(groundMask);*/
+        
         isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
+
+        //Debug.Log(isGrounded);
 
         if (isGrounded && velocity.y < 0)
         {
@@ -113,7 +120,6 @@ public class NewHamsterBallController : MonoBehaviour
     // Callback to be executed on movement update
     public virtual void onMoveInput(InputAction.CallbackContext context)
     {
-       
         //Mapping our 2 dimensional movement onto 3 dimensional space (x->x, y->z)
         //InputActions PlayerInput auto-normalizes for us 
         currMovement.x = context.ReadValue<Vector2>().x;

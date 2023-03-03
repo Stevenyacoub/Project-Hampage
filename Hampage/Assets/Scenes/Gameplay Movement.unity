@@ -670,11 +670,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: c721d2019306a3f4f9c8eb6e1ebf07fb, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.7071067
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: c721d2019306a3f4f9c8eb6e1ebf07fb, type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0.7071068
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: c721d2019306a3f4f9c8eb6e1ebf07fb, type: 3}
       propertyPath: m_LocalRotation.y
@@ -682,7 +682,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: c721d2019306a3f4f9c8eb6e1ebf07fb, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: c721d2019306a3f4f9c8eb6e1ebf07fb, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -740,7 +740,7 @@ MeshCollider:
   m_GameObject: {fileID: 992209405}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 4
   m_Convex: 0
   m_CookingOptions: 30
@@ -775,7 +775,7 @@ SphereCollider:
   m_GameObject: {fileID: 992209405}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 2
   m_Radius: 0.010999998
   m_Center: {x: -0.0000000027939677, y: 0.0000000037252896, z: 0}
@@ -856,6 +856,20 @@ MonoBehaviour:
   knockbackTime: 1
   knockbackCounter: 0
   runMultiplier: 3
+--- !u!136 &992209422
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 992209405}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 0
+  m_Radius: 0.010999997
+  m_Height: 0.021999987
+  m_Direction: 1
+  m_Center: {x: -0.0000000027939675, y: 0.0000000037252894, z: 0}
 --- !u!1 &1110243478
 GameObject:
   m_ObjectHideFlags: 3
@@ -1756,6 +1770,10 @@ PrefabInstance:
       propertyPath: interactUIPrefab
       value: 
       objectReference: {fileID: 2143416775023225458, guid: 8e0f22905c1b9472d9ec32b13b86a673, type: 3}
+    - target: {fileID: 5977377421827512210, guid: 70ec14810f2394e538778efdb0461360, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 70ec14810f2394e538778efdb0461360, type: 3}
 --- !u!114 &1787396558 stripped

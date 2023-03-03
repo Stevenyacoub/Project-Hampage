@@ -1,6 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
-//using System.Diagnostics;
+
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -106,7 +106,10 @@ public class ControllerCharacter : MonoBehaviour
     }
 
     public virtual void handleGravity(){
+       
         isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
+
+        Debug.Log(isGrounded);
 
         if (isGrounded && velocity.y < 0)
         {
