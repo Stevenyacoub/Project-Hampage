@@ -1,124 +1,38 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Security.Cryptography;
+//using System.Diagnostics;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class HamsterBallController : MonoBehaviour
+public class HamsterBallController : ControllerCharacter
 {
-    private Animator anim;
-    public CharacterController controller;
-    public Transform cam;
-
-    public float moveSpeed = 10f;
-    public float jumpForce = 2f;
-    public float gravityScale = -20f;
-    public float turnSmoothTime = 0.1f;
-    float turnSmoothVelocity;
-
-    public Transform groundCheck;
-    public float groundDistance = 0.4f;
-    public LayerMask groundMask;
-
-    public float knockbackForce = 1f;
-    public float knockbackTime = 1f;
-    private float knockbackCounter;
-
-    //private Vector3 moveDirection;
-    Vector3 velocity;
-    bool isGrounded;
-
-    // -- / For new Input System:
-    PlayerInput input;
-    Vector3 currMovement;
-    public float runMultiplier = 3f;
-    float targetAngle;
-    bool runTriggered;
-    bool jumpTriggered;
-    bool attackTriggered;
-
-    void Awake()
+    public override void Awake() {
+        // We do not want the HamsterballController to awake until the object is interacted with
+    }
+    // Once the HamsterBall is interacted with we can make call the original movement Awake()
+    public override void OnEnable() {
+        base.Awake();
+        // triggers animation to enter the ball
+        //anim.SetTrigger("EnterBall");
+    }
+    public override void OnDisable()
     {
-        input = new PlayerInput();
-        controller = GetComponent<CharacterController>();
-        anim = GetComponent<Animator>();
-        
-
-        // Adding our methods (On Move,etc) to the delegate for the motion (hence +=)
-        // This makes our methods call-backs, and calls these methods when a condition is met
-        // - There are 3 states an input can be in: Started (Button Down), performed (button held), and cancelled (released)
-        // - Progress is only applicable to movement as multiple buttons can be held at once. Run and jump are binary so we only need start and stopped.
-        input.CharacterControls.Move.started += onMoveInput;
-        input.CharacterControls.Move.performed += onMoveInput;
-        input.CharacterControls.Move.canceled += onMoveInput;
-
-        input.CharacterControls.Run.started += onRunInput;
-        input.CharacterControls.Run.canceled += onRunInput;
-
-        input.CharacterControls.Jump.started += onJumpInput;
-        input.CharacterControls.Jump.canceled += onJumpInput;
-
-
+        base.OnDisable();
+        // triggers animation to exit the ball
+        //anim.SetTrigger("ExitBall");
+    }
+    public override void Update() {
+        base.Update();
     }
 
-    void Update()
-    {
-        velocity.y += gravityScale * Time.deltaTime;
-        // !! Not reccomended to use .Move() twice, but I haven't been able to figure out how to combine
-        controller.Move(velocity * Time.deltaTime);
-
-        handleRotation();
-
-        
-        //If not running or grounded, use normal movement, else use runMultiplier
-        Vector3 moveDir = (!(runTriggered && isGrounded) ? currMovement : new Vector3(currMovement.x * runMultiplier, currMovement.y, currMovement.z * runMultiplier));
-        controller.Move(moveDir * moveSpeed * Time.deltaTime);
-
-
-        handleGravity();
-
+    public override void handleRotation() { 
+        base.handleRotation();
     }
 
-    void handleRotation()
-    {
-        float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref turnSmoothVelocity, turnSmoothTime);
-        transform.rotation = Quaternion.Euler(0f, angle, 0f);
+    public override void handleGravity() { 
+        base.handleGravity();
     }
-
-    void handleGravity()
-    {
-        isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
-
-        if (isGrounded && velocity.y < 0)
-        {
-            velocity.y = -2f;
-        }
-
-        if (jumpTriggered && isGrounded)
-        {
-            velocity.y = Mathf.Sqrt(jumpForce * -2f * gravityScale);
-        }
-    }
-
-    // -- // -- // USER INPUT
-
-    //Enables our input while our object is alive
-    void OnEnable()
-    {
-        if (input != null)
-            input.CharacterControls.Enable();
-    }
-    //Disables if averse occurs
-    void OnDisable()
-    {
-        if (input != null)
-            input.CharacterControls.Disable();
-    }
-    // Callback to be executed on movement update
-    void onMoveInput(InputAction.CallbackContext context)
-    {
-        //Mapping our 2 dimensional movement onto 3 dimensional space (x->x, y->z)
-        //InputActions PlayerInput auto-normalizes for us 
+    public override void onMoveInput(InputAction.CallbackContext context) {
         currMovement.x = context.ReadValue<Vector2>().x;
         currMovement.z = context.ReadValue<Vector2>().y;
 
@@ -132,18 +46,16 @@ public class HamsterBallController : MonoBehaviour
             currMovement = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
         }
     }
-    // Callbacks to be executed on input update
-    void onRunInput(InputAction.CallbackContext context)
-    {
+
+    public override void onRunInput(InputAction.CallbackContext context) {
         runTriggered = context.ReadValueAsButton();
     }
 
-    void onJumpInput(InputAction.CallbackContext context)
-    {
+    public override void onJumpInput(InputAction.CallbackContext context) {
         jumpTriggered = context.ReadValueAsButton();
     }
-
-    
 }
+
+
 
 
