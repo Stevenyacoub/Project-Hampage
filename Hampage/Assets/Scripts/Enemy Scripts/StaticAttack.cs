@@ -5,7 +5,8 @@ using UnityEngine;
 public class StaticAttack : MonoBehaviour, AttackStrategy
 {
     public int damageModifier = 1;
-    //ControllerCharacter player;
+    public ControllerCharacter contr;
+    private Vector3 knock;
 
     public void performAttack()
     {
@@ -14,21 +15,23 @@ public class StaticAttack : MonoBehaviour, AttackStrategy
 
     private void OnCollisionEnter(Collision col)
     {
-        if(col.gameObject.CompareTag("Player"))
+        if(col.gameObject == contr.player)
         {
             PlayerHealth health = col.gameObject.GetComponent<PlayerHealth>();
             health.DecreaseHealth(damageModifier);
+            Debug.Log("Collision finally worked omfg!!!!!");
         }
     }
 
     private void OnTriggerEnter(Collider col)
     {
-        if (col.gameObject.CompareTag("Player"))
+        if (col.gameObject == contr.player)
         {
+            knock = col.transform.position - contr.player.transform.position;
+            //knock = knock.normalized;
             PlayerHealth health = col.gameObject.GetComponent<PlayerHealth>();
             health.DecreaseHealth(damageModifier);
-            //player.Knockback(player.transform.position - transform.position);
-
+            contr.Knockback(knock);         
         }
     }
 }

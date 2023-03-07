@@ -9,7 +9,7 @@ public class DirtPit : Interactable
     //  - and dig to the next
 
     public DirtPit partnerPit;
-    public GameObject player;
+    public ControllerCharacter contr;
     private IEnumerator waitForSpawn;
     public InteractBox interactBox;
 
@@ -35,8 +35,7 @@ public class DirtPit : Interactable
     // -- Set our variables, and update our partner pit (if it existss)
     void Awake()
     {
-        player = GameObject.FindGameObjectWithTag("Player");
-        interactBox = player.transform.Find("InteractBox").GetComponent<InteractBox>();
+        interactBox = contr.player.transform.Find("InteractBox").GetComponent<InteractBox>();
         // If our partner was assigned via inspector
         if(partnerPit){
             //If they don't have a reference to us, set it
@@ -67,7 +66,7 @@ public class DirtPit : Interactable
         waitForSpawn = WaitForSpawn(tunnelTime,endPos);
 
         // Disable Player's game object to move it freely
-        player.SetActive(false);
+        contr.player.SetActive(false);
 
         // Start the corutine to re-activate player after tunneling is done
         StartCoroutine(waitForSpawn);
@@ -90,7 +89,7 @@ public class DirtPit : Interactable
     private void AnimateTunneling(Vector3 endPos){
         
         float amountComplete = (Time.time - startTime) / tunnelTime;
-        player.transform.position = Vector3.Slerp(transform.position, endPos, amountComplete);
+        contr.player.transform.position = Vector3.Slerp(transform.position, endPos, amountComplete);
 
     }
 
@@ -99,9 +98,9 @@ public class DirtPit : Interactable
     {
         yield return new WaitForSeconds(waitTime - 0.5f);
         doAnimate = false;
-        player.transform.position = endPos;
+        contr.player.transform.position = endPos;
         yield return new WaitForSeconds(0.5f);
-        player.SetActive(true);
+        contr.player.SetActive(true);
     }
 
 

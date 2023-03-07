@@ -6,10 +6,12 @@ using UnityEngine.InputSystem;
 public class ControllerCharacter : MonoBehaviour
 {
     private Animator anim;
+    public GameObject player;
     public CharacterController controller;
     public PlayerManager playerManager;
     public InteractBox interactBox;
     public Transform cam;
+    public Rigidbody rb;
 
     public float moveSpeed = 10f;
     public float jumpForce = 2f;
@@ -21,9 +23,11 @@ public class ControllerCharacter : MonoBehaviour
     public float groundDistance = 0.4f;
     public LayerMask groundMask;
 
-    public float knockbackForce = 1f;
+    //These set and prevent the amount of knockback taken
+    public float knockbackForce = 10f;
     public float knockbackTime = 1f;
     private float knockbackCounter;
+    public Vector3 knockVector;
 
     //private Vector3 moveDirection;
     Vector3 velocity;
@@ -41,6 +45,7 @@ public class ControllerCharacter : MonoBehaviour
     void Awake()
     {
         input = new PlayerInput();
+        player = GameObject.FindWithTag("Player");
         controller = GetComponent<CharacterController>();
         playerManager = GetComponent<PlayerManager>();
         anim = GetComponent<Animator>();
@@ -70,14 +75,15 @@ public class ControllerCharacter : MonoBehaviour
 
     void Update()
     {
+        //if(knockbackCounter <= 0)
+        //{
+        //    controller.enabled = true;
         velocity.y += gravityScale * Time.deltaTime;
         // !! Not reccomended to use .Move() twice, but I haven't been able to figure out how to combine
         controller.Move(velocity * Time.deltaTime);
 
         handleRotation();
         
-        //if(knockbackCounter <= 0)
-        //{
             //If not running or grounded, use normal movement, else use runMultiplier
             Vector3 moveDir = (!(runTriggered && isGrounded) ? currMovement : new Vector3(currMovement.x * runMultiplier, currMovement.y, currMovement.z * runMultiplier));
             controller.Move(moveDir * moveSpeed * Time.deltaTime);
@@ -89,7 +95,8 @@ public class ControllerCharacter : MonoBehaviour
         //}
         //else
         //{
-            //knockbackCounter -= Time.deltaTime;
+        //    rb.AddForce(knockVector);
+        //    knockbackCounter -= Time.deltaTime;
         //}
 
         handleGravity();
@@ -124,6 +131,7 @@ public class ControllerCharacter : MonoBehaviour
     }
     //Disables if averse occurs
     void OnDisable() {
+        Debug.Log("Disabled Controls");
         if(input != null)
             input.CharacterControls.Disable();
     }
@@ -163,10 +171,15 @@ public class ControllerCharacter : MonoBehaviour
         anim.SetTrigger("WhackInput");
     }
 
-/*    public void Knockback(Vector3 direction)
+    //Method called by other scripts to fling player back
+    //Sets timer in the Update method in this script
+    public void Knockback(Vector3 direction)
     {
         knockbackCounter = knockbackTime;
+        knockVector = direction * knockbackForce;
+        rb.AddForce(direction);
+        //controller.enabled = false;
+        Debug.Log("Knockback called!");
 
-        currMovement = direction * knockbackForce;
-    }*/
+    }
 }

@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028352, g: 0.22571376, b: 0.30692244, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028334, g: 0.22571328, b: 0.3069217, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1237,8 +1237,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1110243478}
-  m_LocalRotation: {x: -0.1445417, y: 0.4150662, z: 0.06697779, w: 0.8957353}
-  m_LocalPosition: {x: -0.054410458, y: -4.739286, z: -0.046092987}
+  m_LocalRotation: {x: 0.04519584, y: 0.4199674, z: -0.020946134, w: 0.9061711}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1315,7 +1315,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1144938789}
-  m_LocalRotation: {x: 0.028705578, y: 0.42027894, z: -0.0133036785, w: 0.90684325}
+  m_LocalRotation: {x: 0.028705573, y: 0.4202789, z: -0.013303673, w: 0.90684325}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -1565,7 +1565,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1289383366}
-  m_LocalRotation: {x: 0.01224941, y: 0.4204511, z: -0.005677027, w: 0.90721476}
+  m_LocalRotation: {x: 0.012249394, y: 0.4204511, z: -0.0056770146, w: 0.90721476}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -1867,7 +1867,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1408239140}
-  m_LocalRotation: {x: 0.028705584, y: 0.420279, z: -0.013303681, w: 0.9068432}
+  m_LocalRotation: {x: 0.028705576, y: 0.42027894, z: -0.013303676, w: 0.9068432}
   m_LocalPosition: {x: -2.3601804, y: 2, z: -15.093773}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -2307,6 +2307,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1987579793665059526, guid: 5a9d4b5b0d29f4481be7e17b1866ee9a, type: 3}
+      propertyPath: contr
+      value: 
+      objectReference: {fileID: 2092253919}
     - target: {fileID: 1987579793665059526, guid: 5a9d4b5b0d29f4481be7e17b1866ee9a, type: 3}
       propertyPath: partnerPit
       value: 
@@ -2982,6 +2986,22 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2084077990}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &2092253916 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5977377421241285146, guid: 70ec14810f2394e538778efdb0461360, type: 3}
+  m_PrefabInstance: {fileID: 5977377420154862542}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &2092253919 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5977377421241285147, guid: 70ec14810f2394e538778efdb0461360, type: 3}
+  m_PrefabInstance: {fileID: 5977377420154862542}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2092253916}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4674310bb89ec5c41a043447390ee6d5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &919132148956917679 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1987579793665059526, guid: 5a9d4b5b0d29f4481be7e17b1866ee9a, type: 3}
@@ -3057,6 +3077,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1987579793665059526, guid: 5a9d4b5b0d29f4481be7e17b1866ee9a, type: 3}
+      propertyPath: contr
+      value: 
+      objectReference: {fileID: 2092253919}
     - target: {fileID: 6241254026605381007, guid: 5a9d4b5b0d29f4481be7e17b1866ee9a, type: 3}
       propertyPath: m_RootOrder
       value: 1
@@ -3166,6 +3190,10 @@ PrefabInstance:
       propertyPath: cam
       value: 
       objectReference: {fileID: 1408239143}
+    - target: {fileID: 5977377421241285147, guid: 70ec14810f2394e538778efdb0461360, type: 3}
+      propertyPath: player
+      value: 
+      objectReference: {fileID: 2092253916}
     - target: {fileID: 5977377421241285147, guid: 70ec14810f2394e538778efdb0461360, type: 3}
       propertyPath: interactBox
       value: 
