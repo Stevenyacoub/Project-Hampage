@@ -72,6 +72,9 @@ public class ControllerCharacter : MonoBehaviour
         // We only care about button-down for interact, so just started state
         input.CharacterControls.Interact.started += onInteract;
 
+        // Don't detect collisions on start (camera jitter
+        rb.detectCollisions = false;
+
     }
 
     float startKnocktime;
@@ -85,6 +88,7 @@ public class ControllerCharacter : MonoBehaviour
             if(!controller.enabled)
                 controller.enabled = true;
                 rb.isKinematic = true;
+                rb.detectCollisions = false;
             
             velocity.y += gravityScale * Time.deltaTime;
             // !! Not reccomended to use .Move() twice, but I haven't been able to figure out how to combine
@@ -192,5 +196,6 @@ public class ControllerCharacter : MonoBehaviour
         knockbackCounter = knockbackTime;
         knockVector = direction * knockbackForce;
         controller.enabled = false;
+        rb.detectCollisions = true;
     }
 }

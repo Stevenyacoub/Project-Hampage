@@ -430,8 +430,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1.741601, y: 2.5495071, z: 1.5965691}
-  m_Center: {x: 0, y: -0.17, z: 0}
+  m_Size: {x: 2, y: 2.5, z: 2}
+  m_Center: {x: 0, y: -0.21, z: 0}
 --- !u!54 &354591644
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -920,7 +920,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1144938789}
-  m_LocalRotation: {x: 0.030154308, y: -0.34488514, z: 0.011086055, w: 0.9380949}
+  m_LocalRotation: {x: 0.030154306, y: -0.34488514, z: 0.011086056, w: 0.9380949}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -1073,7 +1073,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1289383366}
-  m_LocalRotation: {x: 0.013130939, y: -0.3450295, z: 0.004827513, w: 0.9384876}
+  m_LocalRotation: {x: 0.013130937, y: -0.34502953, z: 0.004827513, w: 0.9384876}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -1593,7 +1593,7 @@ Rigidbody:
   m_Mass: 1
   m_Drag: 0
   m_AngularDrag: 0.05
-  m_UseGravity: 1
+  m_UseGravity: 0
   m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 80
@@ -2040,11 +2040,11 @@ PrefabInstance:
       objectReference: {fileID: 3469859}
     - target: {fileID: 5977377421241285147, guid: 70ec14810f2394e538778efdb0461360, type: 3}
       propertyPath: knockbackTime
-      value: 0.5
+      value: 0.3
       objectReference: {fileID: 0}
     - target: {fileID: 5977377421241285147, guid: 70ec14810f2394e538778efdb0461360, type: 3}
       propertyPath: knockbackForce
-      value: 20
+      value: 40
       objectReference: {fileID: 0}
     - target: {fileID: 5977377421728590308, guid: 70ec14810f2394e538778efdb0461360, type: 3}
       propertyPath: mainCam
