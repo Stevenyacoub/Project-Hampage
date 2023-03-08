@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class StaticAttack : MonoBehaviour, AttackStrategy
 {
-    public int damageModifier = 1;
+    public int amountDamage = 1;
     public ControllerCharacter contr;
     private Vector3 knock;
 
@@ -18,8 +18,7 @@ public class StaticAttack : MonoBehaviour, AttackStrategy
         if(col.gameObject == contr.player)
         {
             PlayerHealth health = col.gameObject.GetComponent<PlayerHealth>();
-            health.DecreaseHealth(damageModifier);
-            Debug.Log("Collision finally worked omfg!!!!!");
+            health.DecreaseHealth(amountDamage);
         }
     }
 
@@ -27,10 +26,20 @@ public class StaticAttack : MonoBehaviour, AttackStrategy
     {
         if (col.gameObject == contr.player)
         {
-            knock = col.transform.position - contr.player.transform.position;
-            //knock = knock.normalized;
+            // Creates a knockback vector in the direction away from the enemy
+            knock =  Vector3.Normalize( contr.player.transform.position - transform.position);
+
+            // Set the up direction to 0 and keep the x and z the same
+            
+            //knock = new Vector3(knock.x, 0.5f, knock.y);
+
+            // have the player take damage, and trigger the controller's knockback
+
+            Debug.Log("Initiated knockback, dir: "+ knock);
+            Debug.Log("Attacker pos:" + transform.position);
+            Debug.Log("Player Pos:" + contr.player.transform.position);
             PlayerHealth health = col.gameObject.GetComponent<PlayerHealth>();
-            health.DecreaseHealth(damageModifier);
+            health.DecreaseHealth(amountDamage);
             contr.Knockback(knock);         
         }
     }

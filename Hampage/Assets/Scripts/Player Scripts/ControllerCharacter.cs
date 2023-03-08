@@ -24,6 +24,7 @@ public class ControllerCharacter : MonoBehaviour
     public LayerMask groundMask;
 
     //These set and prevent the amount of knockback taken
+    [SerializeField]
     public float knockbackForce = 10f;
     public float knockbackTime = 1f;
     private float knockbackCounter;
@@ -73,17 +74,24 @@ public class ControllerCharacter : MonoBehaviour
 
     }
 
+    float startKnocktime;
+
     void Update()
     {
-        //if(knockbackCounter <= 0)
-        //{
-        //    controller.enabled = true;
-        velocity.y += gravityScale * Time.deltaTime;
-        // !! Not reccomended to use .Move() twice, but I haven't been able to figure out how to combine
-        controller.Move(velocity * Time.deltaTime);
-
-        handleRotation();
         
+
+        if(knockbackCounter <= 0)
+        {
+            if(!controller.enabled)
+                controller.enabled = true;
+                rb.isKinematic = true;
+            
+            velocity.y += gravityScale * Time.deltaTime;
+            // !! Not reccomended to use .Move() twice, but I haven't been able to figure out how to combine
+            controller.Move(velocity * Time.deltaTime);
+
+            handleRotation();
+            
             //If not running or grounded, use normal movement, else use runMultiplier
             Vector3 moveDir = (!(runTriggered && isGrounded) ? currMovement : new Vector3(currMovement.x * runMultiplier, currMovement.y, currMovement.z * runMultiplier));
             controller.Move(moveDir * moveSpeed * Time.deltaTime);
@@ -92,12 +100,18 @@ public class ControllerCharacter : MonoBehaviour
             // //If not running or grounded, use normal movement, else use runMultiplier
             // Vector3 moveDir = (!(runTriggered && isGrounded) ? currMovement : new Vector3(currMovement.x * runMultiplier, currMovement.y, currMovement.z * runMultiplier));
             // controller.Move(moveDir * moveSpeed * Time.deltaTime); 
-        //}
-        //else
-        //{
-        //    rb.AddForce(knockVector);
-        //    knockbackCounter -= Time.deltaTime;
-        //}
+        }
+        else
+        {
+            //Debug.Log("Force Adding: " + knockVector);
+            
+            rb.isKinematic = false;
+            rb.AddForce(knockVector);
+            knockbackCounter -= Time.deltaTime;
+        }
+
+        // This is the typical update used, without knockback functionality
+        // TO-DO: Delete this call & the method associated once knockback works
 
         handleGravity();
 
@@ -177,9 +191,6 @@ public class ControllerCharacter : MonoBehaviour
     {
         knockbackCounter = knockbackTime;
         knockVector = direction * knockbackForce;
-        rb.AddForce(direction);
-        //controller.enabled = false;
-        Debug.Log("Knockback called!");
-
+        controller.enabled = false;
     }
 }
