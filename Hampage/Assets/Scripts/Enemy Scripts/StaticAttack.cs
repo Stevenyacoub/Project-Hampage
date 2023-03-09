@@ -27,9 +27,16 @@ public class StaticAttack : MonoBehaviour, AttackStrategy
         if (col.gameObject == contr.player)
         {
             // Creates a knockback vector in the direction away from the enemy
-            knock =  Vector3.Normalize( contr.player.transform.position - transform.position);
+            knock = contr.player.transform.position - transform.position;
 
             // Set the up direction to 0 and keep the x and z the same
+            // float threshold = 0.0f;
+            knock.y = -1.3f;
+            Vector3.Normalize(knock);
+            // if (knock.y > threshold){
+            //     // Do something
+            // }
+            
             
             //knock = new Vector3(knock.x, 0.5f, knock.y);
 
