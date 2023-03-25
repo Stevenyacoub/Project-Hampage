@@ -109,8 +109,6 @@ public class ControllerCharacter : MonoBehaviour
        
         isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
 
-        Debug.Log(isGrounded);
-
         if (isGrounded && velocity.y < 0)
         {
             velocity.y = -2f; 

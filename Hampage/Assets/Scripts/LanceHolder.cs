@@ -25,9 +25,6 @@ public class LanceHolder : Interactable
         player = GameObject.FindGameObjectWithTag("Player");
         interactBox = player.transform.Find("InteractBox").GetComponent<InteractBox>();
         stateManager = player.GetComponent<PlayerStateManager>();
-        /*if (stateManager == null) {
-            Debug.Log("stateManager is null");
-        }*/
     }
 
     public void LanceStateSwitch(){

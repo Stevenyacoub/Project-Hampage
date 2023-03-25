@@ -8,18 +8,20 @@ TagManager:
   - Door(1)
   - Player Attack
   - Enemy
+  - Map
+  - MinimapCamera
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Terrain
   - Water
   - UI
   - Ground
-  - 
-  - 
-  - 
-  - 
+  - Hamster Ball
+  - Enemy
+  - Coin
+  - MapIcons
   - 
   - 
   - 
