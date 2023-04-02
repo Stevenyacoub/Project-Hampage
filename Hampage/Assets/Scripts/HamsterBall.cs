@@ -15,8 +15,10 @@ public class HamsterBall : Interactable
     public HamsterBallMovement ballScript;
     public Rigidbody rb;
     //public Transform mapI;
-   
-    
+
+    [SerializeField]
+    GameObject mapIcon;
+
     // Vectors for putting the  player into the ball
     Vector3 insideBall;
     Vector3 euler = new Vector3(0, -93, 0);
@@ -93,6 +95,9 @@ public class HamsterBall : Interactable
         ballScript.enabled = false;
         rb.isKinematic = true;
         playerController.enabled = true;
+
+        // Reset mapIcon to not have rolled with ball
+        mapIcon.transform.rotation = Quaternion.Euler(90,0,0);
     }
    
 
