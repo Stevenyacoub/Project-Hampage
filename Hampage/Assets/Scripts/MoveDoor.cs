@@ -7,10 +7,10 @@ public class MoveDoor : Activatable
     private bool activated;
     private BlockMovement bm;
 
+
     public override bool startActivation()
     {
         bm.OperateDoor();
-
         return true;
     }
 
@@ -20,7 +20,7 @@ public class MoveDoor : Activatable
         bm = GetComponent<BlockMovement>();
     }
 
-  
+    
 
 
 }
