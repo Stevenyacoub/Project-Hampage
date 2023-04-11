@@ -8,10 +8,6 @@ using UnityEngine.Audio;
 
 public class MenuBehavior : MonoBehaviour
 {
-      /*Starting Game Variables*/
-      [Header("Starting Game")]
-      public string firstLevel;
-      
       /*Audio Setting Variables
       Audio Settings focuses on the configuration, saving, and loading of audio settings focusing on the Master Audio, Music Audio, and SFX (Special Effects) Audio.
       In the Settings UI the player will be able to change the volume of each audio type, denoted by a slider and 0-100 number */
@@ -78,7 +74,7 @@ public class MenuBehavior : MonoBehaviour
       invoke functions*/
       public void StartGameButton(){
             // Loading the first game level 
-            SceneManager.LoadScene(firstLevel);
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
       }
       /*Quit Game
       Using quit allows players to exit the application and will also save all changes to playerprefs ( the class used to store setting changes) ensuring that any configurations 
