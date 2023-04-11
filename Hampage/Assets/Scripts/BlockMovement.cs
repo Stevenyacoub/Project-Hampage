@@ -23,7 +23,7 @@ public class BlockMovement : MonoBehaviour, IDataPersistence
       
         if (doorOpen != null)
         {
-            Debug.Log("Door Open Position is" + doorOpen);
+            //Debug.Log("Door Open Position is" + doorOpen);
             if (doorOpen == true)
             {
                 doorPosition = openPosition;
