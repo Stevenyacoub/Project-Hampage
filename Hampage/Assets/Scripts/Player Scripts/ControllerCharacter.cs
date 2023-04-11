@@ -1,49 +1,53 @@
 using System.Collections;
 using System.Collections.Generic;
+
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class ControllerCharacter : MonoBehaviour
 {
-    private Animator anim;
-    public CharacterController controller;
-    public PlayerManager playerManager;
-    public InteractBox interactBox;
-    public Transform cam;
+    protected Animator anim;
+    [SerializeReference] public CharacterController controller;
+    [SerializeReference] public PlayerManager playerManager;
+    [SerializeReference] public InteractBox interactBox;
+    [SerializeReference] public Transform cam;
+    [SerializeReference] public PlayerStateManager stateManager;
 
-    public float moveSpeed = 10f;
-    public float jumpForce = 2f;
-    public float gravityScale = -20f;
-    public float turnSmoothTime = 0.1f;
-    float turnSmoothVelocity;
 
-    public Transform groundCheck;
-    public float groundDistance = 0.4f;
-    public LayerMask groundMask;
+    [SerializeReference] public float moveSpeed = 10f;
+    [SerializeReference] public float jumpForce = 2f;
+    [SerializeReference] public float gravityScale = -20f;
+    [SerializeReference] public float turnSmoothTime = 0.1f;
+    [SerializeReference] public float turnSmoothVelocity;
 
-    public float knockbackForce = 1f;
-    public float knockbackTime = 1f;
-    private float knockbackCounter;
+    [SerializeReference] public Transform groundCheck;
+    [SerializeReference] public float groundDistance = 0.4f;
+    [SerializeReference] public LayerMask groundMask;
+
+    [SerializeReference] public float knockbackForce = 1f;
+    [SerializeReference] public float knockbackTime = 1f;
+    [SerializeReference] protected float knockbackCounter;
 
     //private Vector3 moveDirection;
-    Vector3 velocity;
-    bool isGrounded;
+    protected Vector3 velocity;
+    protected bool isGrounded;
 
     // -- / For new Input System:
-    PlayerInput input;
-    Vector3 currMovement;
+    protected PlayerInput input;
+    protected Vector3 currMovement;
     public float runMultiplier = 3f;
-    float targetAngle;
-    bool runTriggered;
-    bool jumpTriggered;
-    bool attackTriggered;
+    protected float targetAngle;
+    protected bool runTriggered;
+    protected bool jumpTriggered;
+    protected bool attackTriggered;
 
-    void Awake()
+    public virtual void Awake()
     {
         input = new PlayerInput();
         controller = GetComponent<CharacterController>();
         playerManager = GetComponent<PlayerManager>();
         anim = GetComponent<Animator>();
+        stateManager = GetComponent<PlayerStateManager>();
 
         // Adding our methods (On Move,etc) to the delegate for the motion (hence +=)
         // This makes our methods call-backs, and calls these methods when a condition is met
@@ -68,7 +72,7 @@ public class ControllerCharacter : MonoBehaviour
 
     }
 
-    void Update()
+    public virtual void Update()
     {
         velocity.y += gravityScale * Time.deltaTime;
         // !! Not reccomended to use .Move() twice, but I haven't been able to figure out how to combine
@@ -96,12 +100,13 @@ public class ControllerCharacter : MonoBehaviour
 
     }
 
-    void handleRotation(){
+    public virtual void handleRotation(){
         float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref turnSmoothVelocity, turnSmoothTime);
         transform.rotation = Quaternion.Euler(0f, angle, 0f);
     }
 
-    void handleGravity(){
+    public virtual void handleGravity(){
+       
         isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
 
         if (isGrounded && velocity.y < 0)
@@ -118,17 +123,17 @@ public class ControllerCharacter : MonoBehaviour
     // -- // -- // USER INPUT
 
     //Enables our input while our object is alive
-    void OnEnable(){
+    public virtual void OnEnable(){
         if(input != null)
             input.CharacterControls.Enable();
     }
     //Disables if averse occurs
-    void OnDisable() {
+    public virtual void OnDisable() {
         if(input != null)
             input.CharacterControls.Disable();
     }
     // Callback to be executed on movement update
-    void onMoveInput(InputAction.CallbackContext context){
+    public virtual void onMoveInput(InputAction.CallbackContext context){
         //Mapping our 2 dimensional movement onto 3 dimensional space (x->x, y->z)
         //InputActions PlayerInput auto-normalizes for us 
         currMovement.x = context.ReadValue<Vector2>().x;
@@ -145,28 +150,30 @@ public class ControllerCharacter : MonoBehaviour
         }
     }
     // Callbacks to be executed on input update
-    void onRunInput(InputAction.CallbackContext context){
+    public virtual void onRunInput(InputAction.CallbackContext context){
         runTriggered = context.ReadValueAsButton();
     }
-    
-    void onJumpInput(InputAction.CallbackContext context){
+
+    public virtual void onJumpInput(InputAction.CallbackContext context){
         jumpTriggered = context.ReadValueAsButton();
     }
 
-    void onInteract(InputAction.CallbackContext context){
+    protected void onInteract(InputAction.CallbackContext context){
         interactBox.interact();
     }
 
-    void onAttack(InputAction.CallbackContext context)
+    protected void onAttack(InputAction.CallbackContext context)
     {
         attackTriggered = context.ReadValueAsButton();
         anim.SetTrigger("WhackInput");
     }
 
-/*    public void Knockback(Vector3 direction)
-    {
-        knockbackCounter = knockbackTime;
+    /*    public void Knockback(Vector3 direction)
+        {
+            knockbackCounter = knockbackTime;
 
-        currMovement = direction * knockbackForce;
-    }*/
+            currMovement = direction * knockbackForce;
+        }*/
+
+ 
 }
