@@ -1,6 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -76,7 +73,10 @@ public class ControllerCharacter : MonoBehaviour
     {
         velocity.y += gravityScale * Time.deltaTime;
         // !! Not reccomended to use .Move() twice, but I haven't been able to figure out how to combine
-        controller.Move(velocity * Time.deltaTime);
+
+        // only moving controller if it's active (inactive when using hamsterball)
+        if(controller.enabled)
+            controller.Move(velocity * Time.deltaTime);
 
         handleRotation();
         
@@ -84,7 +84,10 @@ public class ControllerCharacter : MonoBehaviour
         //{
             //If not running or grounded, use normal movement, else use runMultiplier
             Vector3 moveDir = (!(runTriggered && isGrounded) ? currMovement : new Vector3(currMovement.x * runMultiplier, currMovement.y, currMovement.z * runMultiplier));
-            controller.Move(moveDir * moveSpeed * Time.deltaTime);
+
+             // only moving controller if it's active (inactive when using hamsterball)
+            if(controller.enabled)
+                controller.Move(moveDir * moveSpeed * Time.deltaTime);
 
             //Commenting out '&& isGrounded' gives us a pseudo-dash that's fun but not practical. Comment out above and uncomment below to try:
             // //If not running or grounded, use normal movement, else use runMultiplier
