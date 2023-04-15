@@ -93,5 +93,9 @@ public class GameManager : MonoBehaviour
         UI.ShowTimesUp();
         player.GetComponent<ControllerCharacter>().enabled = false;
     }
+
+    public GameObject getPlayer(){
+        return player;
+    }
    
 }

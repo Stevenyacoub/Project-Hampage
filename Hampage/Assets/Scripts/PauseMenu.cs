@@ -17,8 +17,14 @@ public class PauseMenu : MonoBehaviour
     Transform playerTransform;
     public float yOffset = 100f;
 
+    GameManager gameManager;
+
     void Start()
     {
+        // To instantiate the player, first get the gameManager script (2 parents up)
+        gameManager = transform.parent.transform.parent.GetComponent<GameManager>();
+        player = gameManager.getPlayer();
+
         playerTransform = player.transform;
         //On start we want the pause menu to be disabled
         pauseMenu.SetActive(false);
