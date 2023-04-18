@@ -7,6 +7,7 @@ public class AIController : MonoBehaviour
     public Transform player;
     public LayerMask whatIsGround;
     public LayerMask whatIsPlayer;
+    public GameObject projectileSpawn;
 
     //Patroling
     public Vector3 walkPoint;
@@ -25,6 +26,13 @@ public class AIController : MonoBehaviour
     public float attackRange;
     public bool playerInSightRange;
     public bool playerInAttackRange;
+
+
+    void Start()
+    {
+        projectileSpawn = transform.GetChild(0).gameObject;
+        Debug.Log(projectileSpawn.name);
+    }
 
     private void Awake()
     {
@@ -93,10 +101,13 @@ public class AIController : MonoBehaviour
 
         transform.LookAt(player);
 
+
         if (!alreadyAttacked)
         {
             //Spawns and fires a projectile at player
-            Rigidbody rb = Instantiate(projectile, transform.position, Quaternion.identity).GetComponent<Rigidbody>();
+
+          
+            Rigidbody rb = Instantiate(projectile, projectileSpawn.transform.position, transform.rotation).GetComponent<Rigidbody>();
             rb.AddForce(transform.forward * projectileForwardForce, ForceMode.Impulse);
             rb.AddForce(transform.up * projectileUpForce, ForceMode.Impulse);
 

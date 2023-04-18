@@ -220,6 +220,37 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2881223}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &16266945
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 16266946}
+  m_Layer: 0
+  m_Name: ProjectileSpawn
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &16266946
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 16266945}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.391, z: 0.951}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1367167491}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &30866041
 GameObject:
   m_ObjectHideFlags: 0
@@ -1324,7 +1355,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1367167491}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!135 &1071807936
 SphereCollider:
@@ -1426,10 +1457,12 @@ MonoBehaviour:
   playerManager: {fileID: 0}
   interactBox: {fileID: 0}
   cam: {fileID: 1408239143}
+  stateManager: {fileID: 0}
   moveSpeed: 10
   jumpForce: 2
   gravityScale: -40
   turnSmoothTime: 0.1
+  turnSmoothVelocity: 0
   groundCheck: {fileID: 1548767589}
   groundDistance: 0.4
   groundMask:
@@ -1437,6 +1470,7 @@ MonoBehaviour:
     m_Bits: 64
   knockbackForce: 1
   knockbackTime: 1
+  knockbackCounter: 0
   runMultiplier: 3
 --- !u!135 &1094943190
 SphereCollider:
@@ -1608,7 +1642,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1110243478}
-  m_LocalRotation: {x: 0.00977666, y: 0.9793337, z: -0.048844874, w: 0.19602084}
+  m_LocalRotation: {x: 0.0097766565, y: 0.9793337, z: -0.048844848, w: 0.19602086}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -1795,7 +1829,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1289383366}
-  m_LocalRotation: {x: 0.0026497608, y: 0.98046166, z: -0.013238388, w: 0.19624664}
+  m_LocalRotation: {x: 0.0026497603, y: 0.98046166, z: -0.013238383, w: 0.19624664}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -1940,6 +1974,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 16266946}
   - {fileID: 1838888527}
   - {fileID: 1071807935}
   m_Father: {fileID: 0}
@@ -1965,6 +2000,7 @@ MonoBehaviour:
   whatIsPlayer:
     serializedVersion: 2
     m_Bits: 128
+  projectileSpawn: {fileID: 0}
   walkPoint: {x: -25, y: 1, z: 0}
   walkPointRange: 5
   timeBetweenAttacks: 2
@@ -2830,7 +2866,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1367167491}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!135 &1838888528
 SphereCollider:
@@ -3103,6 +3139,7 @@ MonoBehaviour:
   whatIsPlayer:
     serializedVersion: 2
     m_Bits: 0
+  projectileSpawn: {fileID: 0}
   walkPoint: {x: 0, y: 0, z: 0}
   walkPointRange: 0
   timeBetweenAttacks: 0
@@ -3519,8 +3556,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7649cd29a6e184e459258543a87609db, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _waypointPath: {fileID: 1898298192}
-  _speed: 2
 --- !u!65 &4382409006985079031
 BoxCollider:
   m_ObjectHideFlags: 0
