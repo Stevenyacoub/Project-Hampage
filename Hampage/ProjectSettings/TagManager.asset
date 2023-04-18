@@ -18,7 +18,9 @@ TagManager:
   - Water
   - UI
   - Ground
+  - Player
   - Hamster Ball
+  - Obstacles
   - Enemy
   - Coin
   - MapIcons

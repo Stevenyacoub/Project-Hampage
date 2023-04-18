@@ -5,6 +5,9 @@ using UnityEngine;
 public class PlayerHealth : MonoBehaviour
 {
     public float health = 5;
+    public DeathScreen deathScreen; //Alan
+
+    private bool isDead; //Alan
 
     public void AddHealth(float health)
     {
@@ -14,10 +17,16 @@ public class PlayerHealth : MonoBehaviour
 
     public void DecreaseHealth(float health)
     {
-        if (this.health <= 0)
+        //checks if player dies and is not already dead
+        if (this.health <= 0 && !isDead) //modified by Alan
         {
+            //player is no longer dead
+            isDead = true; //Alan
+            //activates death screen
+            deathScreen.gameOver(); //Alan
             Debug.Log("Ham is dead!");
             Destroy(gameObject);
+            
         }
         else
         {
