@@ -28,6 +28,9 @@ public class PauseMenu : MonoBehaviour
         playerTransform = player.transform;
         //On start we want the pause menu to be disabled
         pauseMenu.SetActive(false);
+
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
     }
 
     // Update is called once per frame
@@ -40,10 +43,14 @@ public class PauseMenu : MonoBehaviour
             if (isPaused)
             {
                 Resume();
+                Cursor.visible = false;
+                Cursor.lockState = CursorLockMode.Locked;
             }
             else
             {
                 Pause();
+                Cursor.visible = true;
+                Cursor.lockState = CursorLockMode.None;
             }
         }
     }
