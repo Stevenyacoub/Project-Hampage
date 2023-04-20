@@ -83,3 +83,6 @@ Hampage/Logs/
 #UserSettings
 Hampage/UserSettings/
 
+#Debug Files
+Hampage/obj/Debug/
+
