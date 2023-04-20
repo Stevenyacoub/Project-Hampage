@@ -769,17 +769,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   controller: {fileID: 5977377421241285140}
-  playerManager: {fileID: 0}
+  playerManager: {fileID: 5977377421784150686}
+  interactBox: {fileID: 5977377421728590308}
   cam: {fileID: 0}
+  stateManager: {fileID: 0}
   moveSpeed: 10
   jumpForce: 2
   gravityScale: -40
   turnSmoothTime: 0.1
+  turnSmoothVelocity: 0
   groundCheck: {fileID: 5977377420889893547}
   groundDistance: 0.4
   groundMask:
     serializedVersion: 2
     m_Bits: 64
+  knockbackForce: 1
+  knockbackTime: 1
+  knockbackCounter: 0
   runMultiplier: 2
 --- !u!143 &5977377421241285140
 CharacterController:
@@ -945,7 +951,7 @@ Transform:
   m_GameObject: {fileID: 5977377421728590310}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0.464}
-  m_LocalScale: {x: 1, y: 1, z: 1.1607001}
+  m_LocalScale: {x: 1.402, y: 1, z: 1.1607001}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5977377421241285143}
@@ -984,7 +990,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5cb0e46f9d6f14f44b52ed960339f618, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerManager: {fileID: 0}
+  interactUIPrefab: {fileID: 2143416775023225458, guid: 8e0f22905c1b9472d9ec32b13b86a673, type: 3}
+  mainCam: {fileID: 0}
+  UIheight: 0.5
 --- !u!1 &5977377421747646001
 GameObject:
   m_ObjectHideFlags: 0
