@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -14,21 +13,24 @@ public class GameManager : MonoBehaviour
     List<IObjective> levelObjectives;
     // Reference to a UI system
     UISystem UI;
-    GameObject player;
+    public GameObject player;
+    public static GameObject staticPlayer;
 
+
+    public static GameManager instance;
 
     // Flag to stop level up (in case time runs out)
-    bool timeUp = false;
+    public static bool timeUp = false;
 
     // Awake is called before the first frame update
     private void Awake() {
         //Get all objectives on our gameobject
-        levelObjectives = transform.GetComponentsInChildren<IObjective>().ToList();
-        //Find our player
-        player = GameObject.FindGameObjectWithTag("Player");
+        levelObjectives = transform.GetComponentsInChildren<IObjective>().ToList();        
         //Instantiate a HUD instance, and set it up (with ourself)
         UI = transform.Find("UISystem").GetComponent<UISystem>();
         UI.SetUpWithManager(this);
+        instance = this;
+        staticPlayer = player;
 
     }
 
@@ -78,12 +80,21 @@ public class GameManager : MonoBehaviour
 
     // Restart current level
     public void RestartLevel(){
+        Time.timeScale = 1f;
+        UISystem.isPaused = false;
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
     // Load main menu
     public void MainMenu(){
+        Time.timeScale = 1f;
         SceneManager.LoadScene(0);
+    }
+
+    // Quit() dictates what the quit button does on click
+    public void Quit() {
+        // Closes the application
+        Application.Quit();
     }
 
     // Show TimesUp ui, and stop taking input
