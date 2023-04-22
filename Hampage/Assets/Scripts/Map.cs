@@ -37,19 +37,22 @@ public class Map : MonoBehaviour
         mapCamera.orthographicSize = 12f;
         // Get the position of the camera
         cameraPosition = mapCamera.transform;
+        defaultUIControls.Enable();
     }
 
     // Update() checks to see if the pause menu is open or not. If it is, then we want to enable
     // the UI controls for the player. If not paused, then the Ui contols are not being used and are disabled
     void Update()
     {
-        if (PauseMenu.isPaused)
-        {
-            defaultUIControls.Enable();
-        }
-        else {
-            defaultUIControls.Disable();
-        }
+        // TO-DO: add back 
+
+        // if (UISystem.isPaused)
+        // {
+        //     defaultUIControls.Enable();
+        // }
+        // else {
+        //     defaultUIControls.Disable();
+        // }
     }
 
     // OnNavigate is located in the defaultUiContols and relates to WASD, arrow keys, and left joystick movement

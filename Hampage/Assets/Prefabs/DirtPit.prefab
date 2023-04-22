@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2540386788138161280}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Graphics
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -44,7 +44,7 @@ GameObject:
   - component: {fileID: 4066723099039934279}
   - component: {fileID: 8026202670380200075}
   - component: {fileID: 7692088497071252879}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Collider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -98,7 +98,7 @@ GameObject:
   - component: {fileID: 1547248904357791312}
   - component: {fileID: 1349253327286664275}
   - component: {fileID: 4831155419066319038}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Plane
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -181,7 +181,7 @@ GameObject:
   - component: {fileID: 7128289919960047338}
   - component: {fileID: 1950503367523051636}
   - component: {fileID: 7932978118719337643}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -265,7 +265,7 @@ GameObject:
   - component: {fileID: 5496977056825976550}
   - component: {fileID: 2085550971695304862}
   - component: {fileID: 1987579793665059526}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: DirtPit
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -332,3 +332,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   partnerPit: {fileID: 0}
   player: {fileID: 0}
+  interactBox: {fileID: 0}
+  tunnelTime: 1.5
