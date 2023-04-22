@@ -12,10 +12,8 @@ public class InteractBox : MonoBehaviour
     List<Interactable> localInteractables;
     //the interactable we want to interact with (closest)
     Interactable priority;
-    //prefab for UI element to be spawned
-    public GameObject interactUIPrefab;
     //current instance of UI element to manipulate
-    GameObject currentInteractUI;
+    public GameObject interactUI;
     bool UIShown = false;
     //camera reference for UI rotation
     public Camera mainCam;
@@ -28,11 +26,8 @@ public class InteractBox : MonoBehaviour
     {
         // Instantiate interactable list
         localInteractables = new List<Interactable>();
-        // set our interact UI to null
-        currentInteractUI = null;
-        // make an instance of our UI prefab, and hide it
-        currentInteractUI = Instantiate(interactUIPrefab, Vector3.zero, Quaternion.identity);
-        currentInteractUI.SetActive(false);
+        // Disable interact UI
+        interactUI.SetActive(false);
     }
 
     // Update is called every frame
@@ -95,22 +90,22 @@ public class InteractBox : MonoBehaviour
 
     // Face UI to the camera
     void RotateUI(){
-        currentInteractUI.transform.LookAt(mainCam.transform);
+        interactUI.transform.LookAt(mainCam.transform);
     }
 
     // Activate our interact UI at the given position
     void ShowUIForInteractable(Interactable interactable){
         // show our UI element, and take note
-        currentInteractUI.SetActive(true);  
+        interactUI.SetActive(true);  
         UIShown = true;
 
         // Move the UI to where the Interactable is located, with height offset
-        currentInteractUI.transform.position = interactable.transform.position + new Vector3(0, UIheight, 0);
+        interactUI.transform.position = interactable.transform.position + new Vector3(0, UIheight, 0);
     }
 
     // Hide UI
     void HideInteractUI(){
-        currentInteractUI.SetActive(false);
+        interactUI.SetActive(false);
         UIShown = false;
     }
 

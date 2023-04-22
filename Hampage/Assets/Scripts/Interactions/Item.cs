@@ -12,9 +12,9 @@ public class Item : Interactable
 
     // Gain references to our player and it's classes on startup
     void Start() {
-        GameObject player = GameObject.FindGameObjectWithTag("Player");
+        GameObject player = GameManager.staticPlayer;
         playerManager = player.GetComponent<PlayerManager>();
-        interactBox = player.transform.Find("InteractBox").GetComponent<InteractBox>();
+        interactBox = player.transform.Find("InteractBox").GetComponent<InteractBox>();        
     }
 
     // Destroys itself and updates the player's inventory
