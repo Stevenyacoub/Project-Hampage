@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 using UnityEngine.UI;
 
 public class UISystem : MonoBehaviour
@@ -24,6 +25,12 @@ public class UISystem : MonoBehaviour
     Transform playerTransform;
     public float yOffset = 100f;
 
+    // Text for HUD
+    [SerializeField] 
+    private TMP_Text coinHUD;
+    [SerializeField] 
+    private TMP_Text healthHUD;
+
 
     public GameManager gameMan;
 
@@ -31,8 +38,8 @@ public class UISystem : MonoBehaviour
         // Get transform for map
         playerTransform = player.transform;
         // Lock cursor:
-        Cursor.visible = false;
-        Cursor.lockState = CursorLockMode.Locked;
+        //Cursor.visible = false;
+        //Cursor.lockState = CursorLockMode.Locked;
     }
 
     void Update() {
