@@ -8,6 +8,9 @@ TagManager:
   - Door(1)
   - Player Attack
   - Enemy
+  - SpeedBoost
+  - Ground
+  - JumpPad
   layers:
   - Default
   - TransparentFX
