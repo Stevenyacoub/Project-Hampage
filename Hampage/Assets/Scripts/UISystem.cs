@@ -114,5 +114,11 @@ public class UISystem : MonoBehaviour
         //Assign buttons for Time-Up screen
     }
 
+    //Disables the map input if the UIsystem is ever disabled
+    public virtual void OnDisable() {
+        if(Map.defaultInput != null)
+            Map.defaultInput.UI.Disable();
+    }
+
 
 }
