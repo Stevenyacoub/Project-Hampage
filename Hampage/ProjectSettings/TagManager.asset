@@ -11,6 +11,9 @@ TagManager:
   - Map
   - MinimapCamera
   - GameManager
+  - JumpPad
+  - Ground
+  - SpeedBoost
   layers:
   - Default
   - TransparentFX

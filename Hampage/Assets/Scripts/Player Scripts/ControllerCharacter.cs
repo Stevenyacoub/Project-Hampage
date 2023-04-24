@@ -12,7 +12,11 @@ public class ControllerCharacter : MonoBehaviour
 
 
     [SerializeReference] public float moveSpeed = 10f;
+    [SerializeReference] private float initialMoveSpeed = 10f;
+    [SerializeReference] public float speedBoostCD = 4f;
     [SerializeReference] public float jumpForce = 2f;
+    [SerializeReference] private float initialJumpForce = 2f;
+    [SerializeReference] public float jumpBoostCD = 4f;
     [SerializeReference] public float gravityScale = -20f;
     [SerializeReference] public float turnSmoothTime = 0.1f;
     [SerializeReference] public float turnSmoothVelocity;
@@ -178,5 +182,32 @@ public class ControllerCharacter : MonoBehaviour
             currMovement = direction * knockbackForce;
         }*/
 
- 
+
+
+    //Alan
+    //enters when player colliedes with object
+    private void OnControllerColliderHit(ControllerColliderHit hit)
+    {
+        //checks to see the tag of the object collided with
+        switch (hit.gameObject.tag)
+        {
+            //if tag is 'SpeedBoost" change the player speed
+            case "SpeedBoost":
+                moveSpeed = 20f;
+                break;
+
+            //if tag is 'JumpPad' change the player jump force
+            case "JumpPad":
+                isGrounded = true;
+                jumpForce = 8f;
+                break;
+
+            //if tag is 'Ground' return moveSpeed and jumpForce to original values
+            case "Ground":
+                moveSpeed = initialMoveSpeed;
+                jumpForce = initialJumpForce;
+                break;
+        }
+    }
+
 }
