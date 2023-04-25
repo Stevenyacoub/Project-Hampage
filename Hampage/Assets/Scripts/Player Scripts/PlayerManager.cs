@@ -14,6 +14,7 @@ public class PlayerManager : MonoBehaviour
     // !! We need to build a inventory version of items when they're collected, this is only a temporary demonstration!!!
     List<Item> inventory;
     int numCoins = 0;
+    UISystem ui;
 
 
     // Awake gets called before the first frame update
@@ -37,6 +38,15 @@ public class PlayerManager : MonoBehaviour
 
     public void addCoin(){
         numCoins++;
+        notifyCoinUpdate();
+    }
+
+    public void setUpWithUI(UISystem ui){
+        this.ui = ui;
+    }
+
+    public void notifyCoinUpdate(){
+        ui.UpdateCoinCounter(numCoins);
     }
 
 }
