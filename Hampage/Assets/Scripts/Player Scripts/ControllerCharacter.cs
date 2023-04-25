@@ -193,13 +193,13 @@ public class ControllerCharacter : MonoBehaviour
         {
             //if tag is 'SpeedBoost" change the player speed
             case "SpeedBoost":
-                moveSpeed = 20f;
+                moveSpeed = 25f;
                 break;
 
             //if tag is 'JumpPad' change the player jump force
             case "JumpPad":
                 isGrounded = true;
-                jumpForce = 8f;
+                jumpForce = 16f;
                 break;
 
             //if tag is 'Ground' return moveSpeed and jumpForce to original values
