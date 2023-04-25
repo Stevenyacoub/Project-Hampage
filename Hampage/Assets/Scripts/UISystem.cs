@@ -38,8 +38,8 @@ public class UISystem : MonoBehaviour
         // Get transform for map
         playerTransform = player.transform;
         // Lock cursor:
-        //Cursor.visible = false;
-        //Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
     }
 
     void Update() {
