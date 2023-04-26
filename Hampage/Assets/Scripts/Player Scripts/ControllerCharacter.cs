@@ -42,6 +42,8 @@ public class ControllerCharacter : MonoBehaviour
     protected bool jumpTriggered;
     protected bool attackTriggered;
 
+    public Animator hamsterMovementAnimator;
+
     public virtual void Awake()
     {
         input = new PlayerInput();
@@ -103,8 +105,15 @@ public class ControllerCharacter : MonoBehaviour
             //knockbackCounter -= Time.deltaTime;
         //}
 
-        handleGravity();
+        if(currMovement.magnitude >= 0.1f){
+            // If we're moving significantly, animate walk
+            hamsterMovementAnimator.SetBool("isWalking", true);
 
+        }else{
+            hamsterMovementAnimator.SetBool("isWalking", false);
+        }
+
+        handleGravity();
     }
 
     public virtual void handleRotation(){
@@ -155,6 +164,9 @@ public class ControllerCharacter : MonoBehaviour
 
             currMovement = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
         }
+
+        // Let animator know to start walking
+        //hamsterMovementAnimator.SetTrigger("startWalking");
     }
     // Callbacks to be executed on input update
     public virtual void onRunInput(InputAction.CallbackContext context){
@@ -167,6 +179,8 @@ public class ControllerCharacter : MonoBehaviour
 
     protected void onInteract(InputAction.CallbackContext context){
         interactBox.interact();
+        // Let animator know to start interacting
+        hamsterMovementAnimator.SetTrigger("startInteracting");
     }
 
     protected void onAttack(InputAction.CallbackContext context)
