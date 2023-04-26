@@ -498,7 +498,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4588264423004066246}
   m_Layer: 0
-  m_Name: PlaceholderFace (1)
+  m_Name: PlaceholderFace
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -757,6 +757,7 @@ MonoBehaviour:
   knockbackTime: 1
   knockbackCounter: 0
   runMultiplier: 2
+  hamsterMovementAnimator: {fileID: 1526258181382364779}
 --- !u!143 &5977377421241285140
 CharacterController:
   m_ObjectHideFlags: 0
@@ -1246,6 +1247,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 13d5652df2e73493eaac73343931e278, type: 3}
+--- !u!95 &1526258181382364779 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 12096077, guid: 13d5652df2e73493eaac73343931e278, type: 3}
+  m_PrefabInstance: {fileID: 1526258181375577126}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &6568614075073614894 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5622247197443102728, guid: 13d5652df2e73493eaac73343931e278, type: 3}
