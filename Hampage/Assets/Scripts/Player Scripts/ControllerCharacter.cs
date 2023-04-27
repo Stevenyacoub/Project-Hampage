@@ -105,8 +105,9 @@ public class ControllerCharacter : MonoBehaviour
             //knockbackCounter -= Time.deltaTime;
         //}
 
+        // If we're moving significantly, animate walk
         if(currMovement.magnitude >= 0.1f){
-            // If we're moving significantly, animate walk
+            
             hamsterMovementAnimator.SetBool("isWalking", true);
 
         }else{
