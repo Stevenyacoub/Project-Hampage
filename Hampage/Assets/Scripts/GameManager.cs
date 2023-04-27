@@ -28,7 +28,6 @@ public class GameManager : MonoBehaviour
         levelObjectives = transform.GetComponentsInChildren<IObjective>().ToList();        
         //Instantiate a HUD instance, and set it up (with ourself)
         UI = transform.Find("UISystem").GetComponent<UISystem>();
-        UI.SetUpWithManager(this);
         instance = this;
         staticPlayer = player;
 

@@ -31,8 +31,8 @@ public class UISystem : MonoBehaviour
     [SerializeField] 
     private TMP_Text healthHUD;
 
-
-    public GameManager gameMan;
+    public PlayerManager playerMan;
+    public PlayerHealth playerHealth;
 
     void Start() {
         // Get transform for map
@@ -40,6 +40,26 @@ public class UISystem : MonoBehaviour
         // Lock cursor:
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
+
+        // Get player manager to get inventory info
+        playerMan = GameManager.staticPlayer.GetComponent<PlayerManager>();
+        // Have player manager have our instance so we can update UI
+        playerMan.setUpWithUI(this);
+
+        playerHealth = GameManager.staticPlayer.GetComponent<PlayerHealth>();
+        // Same as playerman
+        playerHealth.setUpWithUI(this);
+    }
+
+    // Called from GameManager
+    public void UpdateCoinCounter(int numCoins){
+        coinHUD.SetText("Coin: " + numCoins);
+    }
+
+    // Called from GameManager
+    public void UpdateHealthCounter(float health){
+        Debug.Log("Set Health to" + health);
+        healthHUD.SetText("Health: " + health);
     }
 
     void Update() {
@@ -100,18 +120,6 @@ public class UISystem : MonoBehaviour
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.None;
         Time.timeScale = 1f;
-    }
-
-    // Sets the game manager, and then uses it to assign the button functionality
-    public bool SetUpWithManager(GameManager gameManager){
-        this.gameMan = gameManager;
-        AssignButtons();
-        return true;
-    }
-
-    // Assigns buttons their respective functionalities from gamemanager
-    void AssignButtons(){
-        //Assign buttons for Time-Up screen
     }
 
     //Disables the map input if the UIsystem is ever disabled
