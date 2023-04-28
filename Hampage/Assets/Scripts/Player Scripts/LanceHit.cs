@@ -11,6 +11,10 @@ public class LanceHit : MonoBehaviour
         {
             Wormy health = col.gameObject.GetComponent<Wormy>();
             health.takeDamage(damageModifier);
+        }else if(col.gameObject.tag == "Boss")
+        {
+            Bosswurm bosshealth = col.gameObject.GetComponent<Bosswurm>();
+            bosshealth.takeDamage(damageModifier);
         }
     }
 
@@ -19,8 +23,14 @@ public class LanceHit : MonoBehaviour
         if (col.gameObject.tag == "Enemy")
         {
             Wormy health = col.gameObject.GetComponent<Wormy>();
-            health.takeDamage(damageModifier);            
+ 
+            health.takeDamage(damageModifier);
             //enemy knockback
+        }
+        else if (col.gameObject.tag == "Boss")
+        {
+            Bosswurm bosshealth = col.gameObject.GetComponent<Bosswurm>();
+            bosshealth.takeDamage(damageModifier);
         }
     }
 }
