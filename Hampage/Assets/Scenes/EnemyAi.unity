@@ -1459,7 +1459,11 @@ MonoBehaviour:
   cam: {fileID: 1408239143}
   stateManager: {fileID: 0}
   moveSpeed: 10
+  initialMoveSpeed: 10
+  speedBoostCD: 4
   jumpForce: 2
+  initialJumpForce: 2
+  jumpBoostCD: 4
   gravityScale: -40
   turnSmoothTime: 0.1
   turnSmoothVelocity: 0
@@ -1829,7 +1833,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1289383366}
-  m_LocalRotation: {x: 0.0026497608, y: 0.98046166, z: -0.013238385, w: 0.19624664}
+  m_LocalRotation: {x: 0.0026497603, y: 0.98046166, z: -0.013238383, w: 0.19624664}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -2000,7 +2004,7 @@ MonoBehaviour:
   whatIsPlayer:
     serializedVersion: 2
     m_Bits: 128
-  projectileSpawn: {fileID: 0}
+  projectileSpawn: {fileID: 16266945}
   walkPoint: {x: -25, y: 1, z: 0}
   walkPointRange: 5
   timeBetweenAttacks: 2
