@@ -89,7 +89,15 @@ public class ControllerCharacter : MonoBehaviour
         //if(knockbackCounter <= 0)
         //{
             //If not running or grounded, use normal movement, else use runMultiplier
-            Vector3 moveDir = (!(runTriggered && isGrounded) ? currMovement : new Vector3(currMovement.x * runMultiplier, currMovement.y, currMovement.z * runMultiplier));
+            //Vector3 moveDir = (!(runTriggered && isGrounded) ? currMovement : new Vector3(currMovement.x * runMultiplier, currMovement.y, currMovement.z * runMultiplier));
+            Vector3 moveDir;
+            if(!(runTriggered && isGrounded)){
+                moveDir = currMovement;
+                hamsterMovementAnimator.SetFloat("runMultiplier",1);
+            }else{
+                moveDir = new Vector3(currMovement.x * runMultiplier, currMovement.y, currMovement.z * runMultiplier);
+                hamsterMovementAnimator.SetFloat("runMultiplier",1.5f);
+            }
 
              // only moving controller if it's active (inactive when using hamsterball)
             if(controller.enabled)
@@ -122,9 +130,35 @@ public class ControllerCharacter : MonoBehaviour
         transform.rotation = Quaternion.Euler(0f, angle, 0f);
     }
 
+    bool hasJumped = false;
+
     public virtual void handleGravity(){
        
         isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
+
+        if(!isGrounded){
+            // If not grounded, try to fall
+            if(!hamsterMovementAnimator.GetBool("isFalling")){
+                hamsterMovementAnimator.SetBool("isFalling",true);
+            }
+        }else{
+            // If falling, stop
+            if(hamsterMovementAnimator.GetBool("isFalling")){
+                hamsterMovementAnimator.SetBool("isFalling",false);
+            }
+
+            bool reachedLand = hamsterMovementAnimator.GetCurrentAnimatorStateInfo(0).IsName("Land");
+            bool reachedRun = hamsterMovementAnimator.GetCurrentAnimatorStateInfo(0).IsName("Run");
+            bool reachedIdle = hamsterMovementAnimator.GetCurrentAnimatorStateInfo(0).IsName("Idle");
+
+            if( reachedLand || reachedIdle || reachedRun){
+                //We've finished our jump, so we can now unblock transitions to falling
+                hamsterMovementAnimator.SetBool("midJump",false);
+                // Let the code know that we've finished jumping as well
+                hasJumped = false;
+            }
+        
+        }
 
         if (isGrounded && velocity.y < 0)
         {
@@ -133,8 +167,20 @@ public class ControllerCharacter : MonoBehaviour
 
         if (jumpTriggered && isGrounded)
         {
+            if(!hasJumped){
+                hasJumped = true;
+                // We can jump, so trigger jump animation
+                hamsterMovementAnimator.SetTrigger("startJumping");
+                // Block transitions to Falling for the time being
+                hamsterMovementAnimator.SetBool("midJump",true);
+                // Let our code know we already triggered it (to prevent multiple triggers)
+                
+            }
+                
             velocity.y = Mathf.Sqrt(jumpForce * -2f * gravityScale);
         }
+
+       
     }
 
     // -- // -- // USER INPUT
