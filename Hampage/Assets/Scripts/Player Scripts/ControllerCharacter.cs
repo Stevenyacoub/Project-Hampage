@@ -12,7 +12,11 @@ public class ControllerCharacter : MonoBehaviour
 
 
     [SerializeReference] public float moveSpeed = 10f;
+    [SerializeReference] private float initialMoveSpeed = 10f;
+    [SerializeReference] public float speedBoostCD = 4f;
     [SerializeReference] public float jumpForce = 2f;
+    [SerializeReference] private float initialJumpForce = 2f;
+    [SerializeReference] public float jumpBoostCD = 4f;
     [SerializeReference] public float gravityScale = -20f;
     [SerializeReference] public float turnSmoothTime = 0.1f;
     [SerializeReference] public float turnSmoothVelocity;
@@ -37,6 +41,8 @@ public class ControllerCharacter : MonoBehaviour
     protected bool runTriggered;
     protected bool jumpTriggered;
     protected bool attackTriggered;
+
+    public Animator hamsterMovementAnimator;
 
     public virtual void Awake()
     {
@@ -83,7 +89,15 @@ public class ControllerCharacter : MonoBehaviour
         //if(knockbackCounter <= 0)
         //{
             //If not running or grounded, use normal movement, else use runMultiplier
-            Vector3 moveDir = (!(runTriggered && isGrounded) ? currMovement : new Vector3(currMovement.x * runMultiplier, currMovement.y, currMovement.z * runMultiplier));
+            //Vector3 moveDir = (!(runTriggered && isGrounded) ? currMovement : new Vector3(currMovement.x * runMultiplier, currMovement.y, currMovement.z * runMultiplier));
+            Vector3 moveDir;
+            if(!(runTriggered && isGrounded)){
+                moveDir = currMovement;
+                hamsterMovementAnimator.SetFloat("runMultiplier",1);
+            }else{
+                moveDir = new Vector3(currMovement.x * runMultiplier, currMovement.y, currMovement.z * runMultiplier);
+                hamsterMovementAnimator.SetFloat("runMultiplier",1.5f);
+            }
 
              // only moving controller if it's active (inactive when using hamsterball)
             if(controller.enabled)
@@ -99,8 +113,16 @@ public class ControllerCharacter : MonoBehaviour
             //knockbackCounter -= Time.deltaTime;
         //}
 
-        handleGravity();
+        // If we're moving significantly, animate walk
+        if(currMovement.magnitude >= 0.1f){
+            
+            hamsterMovementAnimator.SetBool("isWalking", true);
 
+        }else{
+            hamsterMovementAnimator.SetBool("isWalking", false);
+        }
+
+        handleGravity();
     }
 
     public virtual void handleRotation(){
@@ -108,9 +130,35 @@ public class ControllerCharacter : MonoBehaviour
         transform.rotation = Quaternion.Euler(0f, angle, 0f);
     }
 
+    bool hasJumped = false;
+
     public virtual void handleGravity(){
        
         isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
+
+        if(!isGrounded){
+            // If not grounded, try to fall
+            if(!hamsterMovementAnimator.GetBool("isFalling")){
+                hamsterMovementAnimator.SetBool("isFalling",true);
+            }
+        }else{
+            // If falling, stop
+            if(hamsterMovementAnimator.GetBool("isFalling")){
+                hamsterMovementAnimator.SetBool("isFalling",false);
+            }
+
+            bool reachedLand = hamsterMovementAnimator.GetCurrentAnimatorStateInfo(0).IsName("Land");
+            bool reachedRun = hamsterMovementAnimator.GetCurrentAnimatorStateInfo(0).IsName("Run");
+            bool reachedIdle = hamsterMovementAnimator.GetCurrentAnimatorStateInfo(0).IsName("Idle");
+
+            if( reachedLand || reachedIdle || reachedRun){
+                //We've finished our jump, so we can now unblock transitions to falling
+                hamsterMovementAnimator.SetBool("midJump",false);
+                // Let the code know that we've finished jumping as well
+                hasJumped = false;
+            }
+        
+        }
 
         if (isGrounded && velocity.y < 0)
         {
@@ -119,8 +167,20 @@ public class ControllerCharacter : MonoBehaviour
 
         if (jumpTriggered && isGrounded)
         {
+            if(!hasJumped){
+                hasJumped = true;
+                // We can jump, so trigger jump animation
+                hamsterMovementAnimator.SetTrigger("startJumping");
+                // Block transitions to Falling for the time being
+                hamsterMovementAnimator.SetBool("midJump",true);
+                // Let our code know we already triggered it (to prevent multiple triggers)
+                
+            }
+                
             velocity.y = Mathf.Sqrt(jumpForce * -2f * gravityScale);
         }
+
+       
     }
 
     // -- // -- // USER INPUT
@@ -151,6 +211,9 @@ public class ControllerCharacter : MonoBehaviour
 
             currMovement = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
         }
+
+        // Let animator know to start walking
+        //hamsterMovementAnimator.SetTrigger("startWalking");
     }
     // Callbacks to be executed on input update
     public virtual void onRunInput(InputAction.CallbackContext context){
@@ -163,12 +226,14 @@ public class ControllerCharacter : MonoBehaviour
 
     protected void onInteract(InputAction.CallbackContext context){
         interactBox.interact();
+        // Let animator know to start interacting
+        hamsterMovementAnimator.SetTrigger("startInteracting");
     }
 
     protected void onAttack(InputAction.CallbackContext context)
     {
         attackTriggered = context.ReadValueAsButton();
-        anim.SetTrigger("WhackInput");
+        anim.SetTrigger("JabInput");
     }
 
     /*    public void Knockback(Vector3 direction)
@@ -178,5 +243,32 @@ public class ControllerCharacter : MonoBehaviour
             currMovement = direction * knockbackForce;
         }*/
 
- 
+
+
+    //Alan
+    //enters when player colliedes with object
+    private void OnControllerColliderHit(ControllerColliderHit hit)
+    {
+        //checks to see the tag of the object collided with
+        switch (hit.gameObject.tag)
+        {
+            //if tag is 'SpeedBoost" change the player speed
+            case "SpeedBoost":
+                moveSpeed = 25f;
+                break;
+
+            //if tag is 'JumpPad' change the player jump force
+            case "JumpPad":
+                isGrounded = true;
+                jumpForce = 16f;
+                break;
+
+            //if tag is 'Ground' return moveSpeed and jumpForce to original values
+            case "Ground":
+                moveSpeed = initialMoveSpeed;
+                jumpForce = initialJumpForce;
+                break;
+        }
+    }
+
 }

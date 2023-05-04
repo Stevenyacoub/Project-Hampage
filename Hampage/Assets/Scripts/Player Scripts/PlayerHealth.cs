@@ -6,6 +6,7 @@ public class PlayerHealth : MonoBehaviour
 {
     public float health = 5;
     public DeathScreen deathScreen; //Alan
+    UISystem ui;
 
     private bool isDead; //Alan
 
@@ -32,6 +33,15 @@ public class PlayerHealth : MonoBehaviour
         {
             Debug.Log("Ham took damage! Current Health: " + this.health);
             this.health -= health;
+            
         }
+
+        ui.UpdateHealthCounter(this.health);
     }
+
+    public void setUpWithUI(UISystem ui){
+        this.ui = ui;
+    }
+
+    
 }

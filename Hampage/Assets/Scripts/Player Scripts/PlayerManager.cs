@@ -13,6 +13,8 @@ public class PlayerManager : MonoBehaviour
     // !! TODO: Items currently delete themselves, so the items themselves can't be accessed!!
     // !! We need to build a inventory version of items when they're collected, this is only a temporary demonstration!!!
     List<Item> inventory;
+    int numCoins = 0;
+    UISystem ui;
 
 
     // Awake gets called before the first frame update
@@ -32,6 +34,19 @@ public class PlayerManager : MonoBehaviour
     public void addToInventory(Item item){
         inventory.Add(item);
         Debug.Log("Inventory Count:" + inventory.Count);
+    }
+
+    public void addCoin(){
+        numCoins++;
+        notifyCoinUpdate();
+    }
+
+    public void setUpWithUI(UISystem ui){
+        this.ui = ui;
+    }
+
+    public void notifyCoinUpdate(){
+        ui.UpdateCoinCounter(numCoins);
     }
 
 }
