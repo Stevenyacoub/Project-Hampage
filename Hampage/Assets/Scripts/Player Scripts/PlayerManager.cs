@@ -14,6 +14,7 @@ public class PlayerManager : MonoBehaviour
     // !! We need to build a inventory version of items when they're collected, this is only a temporary demonstration!!!
     List<Item> inventory;
     int numCoins = 0;
+    int numKeys = 0;
     UISystem ui;
 
 
@@ -39,6 +40,10 @@ public class PlayerManager : MonoBehaviour
     public void addCoin(){
         numCoins++;
         notifyCoinUpdate();
+    }
+
+    public void addKey(){
+        numCoins++;
     }
 
     public void setUpWithUI(UISystem ui){
