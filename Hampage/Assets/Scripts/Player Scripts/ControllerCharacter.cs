@@ -86,10 +86,9 @@ public class ControllerCharacter : MonoBehaviour
 
         handleRotation();
         
-        //if(knockbackCounter <= 0)
-        //{
+        if(knockbackCounter <= 0)
+        {
             //If not running or grounded, use normal movement, else use runMultiplier
-            //Vector3 moveDir = (!(runTriggered && isGrounded) ? currMovement : new Vector3(currMovement.x * runMultiplier, currMovement.y, currMovement.z * runMultiplier));
             Vector3 moveDir;
             if(!(runTriggered && isGrounded)){
                 moveDir = currMovement;
@@ -104,14 +103,14 @@ public class ControllerCharacter : MonoBehaviour
                 controller.Move(moveDir * moveSpeed * Time.deltaTime);
 
             //Commenting out '&& isGrounded' gives us a pseudo-dash that's fun but not practical. Comment out above and uncomment below to try:
-            // //If not running or grounded, use normal movement, else use runMultiplier
-            // Vector3 moveDir = (!(runTriggered && isGrounded) ? currMovement : new Vector3(currMovement.x * runMultiplier, currMovement.y, currMovement.z * runMultiplier));
-            // controller.Move(moveDir * moveSpeed * Time.deltaTime); 
-        //}
-        //else
-        //{
-            //knockbackCounter -= Time.deltaTime;
-        //}
+            //If not running or grounded, use normal movement, else use runMultiplier
+            //Vector3 moveDir = (!(runTriggered && isGrounded) ? currMovement : new Vector3(currMovement.x * runMultiplier, currMovement.y, currMovement.z * runMultiplier));
+            //controller.Move(moveDir * moveSpeed * Time.deltaTime); 
+        }
+        else
+        {
+            knockbackCounter -= Time.deltaTime;
+        }
 
         // If we're moving significantly, animate walk
         if(currMovement.magnitude >= 0.1f){
@@ -236,12 +235,11 @@ public class ControllerCharacter : MonoBehaviour
         anim.SetTrigger("JabInput");
     }
 
-    /*    public void Knockback(Vector3 direction)
-        {
-            knockbackCounter = knockbackTime;
+    public void Knockback(Vector3 direction){
+        knockbackCounter = knockbackTime;
 
-            currMovement = direction * knockbackForce;
-        }*/
+        currMovement = direction * knockbackForce;
+    }
 
 
 
