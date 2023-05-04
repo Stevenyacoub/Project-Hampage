@@ -233,7 +233,7 @@ public class ControllerCharacter : MonoBehaviour
     protected void onAttack(InputAction.CallbackContext context)
     {
         attackTriggered = context.ReadValueAsButton();
-        anim.SetTrigger("WhackInput");
+        anim.SetTrigger("JabInput");
     }
 
     /*    public void Knockback(Vector3 direction)
