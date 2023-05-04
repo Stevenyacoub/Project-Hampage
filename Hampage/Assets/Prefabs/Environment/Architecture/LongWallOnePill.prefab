@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3151682476748516558}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: LongWallOnePill
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -23,9 +23,9 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2306456805369993258}
-  m_LocalRotation: {x: -0.7071068, y: -0, z: -0, w: 0.7071067}
+  m_LocalRotation: {x: -0.7069834, y: 0, z: 0, w: 0.7072302}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1.1634654, z: 1}
+  m_LocalScale: {x: 1, y: 1.1634655, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 5967196641748581789}
@@ -35,7 +35,7 @@ Transform:
   - {fileID: 2680759782671108630}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -89.98, y: 0, z: 0}
 --- !u!1 &3348470841174364332
 GameObject:
   m_ObjectHideFlags: 0
@@ -48,7 +48,7 @@ GameObject:
   - component: {fileID: 1340985567911658931}
   - component: {fileID: 3853062633554719097}
   - component: {fileID: 1680484669284974422}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Pillar_Standalone (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -62,14 +62,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3348470841174364332}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 5.76, y: 0.25785068, z: -2.84}
+  m_LocalRotation: {x: 0.000000029802315, y: -0.00000010430811, z: 0.8683703, w: 0.49591634}
+  m_LocalPosition: {x: 5.65, y: 0.43, z: -2.84}
   m_LocalScale: {x: 2.8647046, y: 2.8647041, z: 2.8647027}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3151682476748516558}
   m_RootOrder: 4
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 120.54}
 --- !u!33 &1340985567911658931
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -98,7 +98,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 08185dd16390646bd8adb7a5c05c9fdd, type: 2}
+  - {fileID: 2100000, guid: 4a7bff6f38ca948769529692c6fa4044, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -146,7 +146,7 @@ GameObject:
   - component: {fileID: 3466933183681052374}
   - component: {fileID: 3466933183681052375}
   - component: {fileID: 3878551453855777853}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wall_1 (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -196,7 +196,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 08185dd16390646bd8adb7a5c05c9fdd, type: 2}
+  - {fileID: 2100000, guid: 4a7bff6f38ca948769529692c6fa4044, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -244,7 +244,7 @@ GameObject:
   - component: {fileID: 3466933183683954585}
   - component: {fileID: 3466933183683954582}
   - component: {fileID: 3878551453854055804}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wall_2 (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -294,7 +294,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 08185dd16390646bd8adb7a5c05c9fdd, type: 2}
+  - {fileID: 2100000, guid: 4a7bff6f38ca948769529692c6fa4044, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -342,7 +342,7 @@ GameObject:
   - component: {fileID: 708745542390732386}
   - component: {fileID: 3328458200596325032}
   - component: {fileID: 872463520470658177}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wall_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -392,7 +392,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 08185dd16390646bd8adb7a5c05c9fdd, type: 2}
+  - {fileID: 2100000, guid: 4a7bff6f38ca948769529692c6fa4044, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -440,7 +440,7 @@ GameObject:
   - component: {fileID: 7304950950569767480}
   - component: {fileID: 4793115771847575282}
   - component: {fileID: 5137188554098129937}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wall_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -490,7 +490,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 08185dd16390646bd8adb7a5c05c9fdd, type: 2}
+  - {fileID: 2100000, guid: 4a7bff6f38ca948769529692c6fa4044, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
