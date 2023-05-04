@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TimberTron : AIController
+public class TimberTronController : AIController
 {
 
     // Created by Giovanni Quevedo

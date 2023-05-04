@@ -12,7 +12,6 @@ public class LevelExit : MonoBehaviour
     // Called when a gameobject enters the trigger
     // if the object is a player, tries to exit the level
     private void OnTriggerEnter(Collider other) {
-        Debug.Log(other.name);
         if(other.tag == "Player")
             gameMan.CheckForExit();
     }
