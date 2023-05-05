@@ -53,7 +53,10 @@ public class UISystem : MonoBehaviour
 
     // Called from GameManager
     public void UpdateCoinCounter(int numCoins){
-        coinHUD.SetText("Coin: " + numCoins);
+        if(numCoins <= 1)
+            coinHUD.SetText("Coin: " + numCoins);
+        else
+            coinHUD.SetText("Coins: " + numCoins);
     }
 
     // Called from GameManager
