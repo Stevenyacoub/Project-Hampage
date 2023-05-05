@@ -3,7 +3,6 @@ using UnityEngine.InputSystem;
 
 public class ControllerCharacter : MonoBehaviour
 {
-    protected Animator anim;
     [SerializeReference] public CharacterController controller;
     [SerializeReference] public PlayerManager playerManager;
     [SerializeReference] public InteractBox interactBox;
@@ -40,12 +39,15 @@ public class ControllerCharacter : MonoBehaviour
 
     // For knockback
     Rigidbody rb;
-    [SerializeReference] public float knockbackForce = 1f;
+    [SerializeReference] public float knockbackForce = 2f;
     [SerializeReference] public float knockbackTime = 1f;
     [SerializeReference] protected float knockbackCounter;
     public Vector3 knockVector;
     bool knockBackFlag = false;
 
+     // Anmations
+    protected Animator anim;
+    bool hasJumped = false;
     public Animator hamsterMovementAnimator;
 
     public virtual void Awake()
@@ -55,7 +57,7 @@ public class ControllerCharacter : MonoBehaviour
         playerManager = GetComponent<PlayerManager>();
         anim = GetComponent<Animator>();
         stateManager = GetComponent<PlayerStateManager>();
-        //
+        rb = GetComponent<Rigidbody>();
 
         // Adding our methods (On Move,etc) to the delegate for the motion (hence +=)
         // This makes our methods call-backs, and calls these methods when a condition is met
@@ -90,10 +92,12 @@ public class ControllerCharacter : MonoBehaviour
         {
 
             if(knockBackFlag == true){
+                rb.detectCollisions = false;
                 controller.enabled = true;
                 rb.isKinematic = true;
-                rb.detectCollisions = false;
+                
                 knockBackFlag = false;
+                velocity.y = -2f; 
             }
             
             velocity.y += gravityScale * Time.deltaTime;
@@ -127,7 +131,6 @@ public class ControllerCharacter : MonoBehaviour
         else
         {
 
-            rb.isKinematic = false;
             rb.AddForce(knockVector);
             knockbackCounter -= Time.deltaTime;
         }
@@ -149,7 +152,7 @@ public class ControllerCharacter : MonoBehaviour
         transform.rotation = Quaternion.Euler(0f, angle, 0f);
     }
 
-    bool hasJumped = false;
+    
 
     public virtual void handleGravity(){
        
@@ -258,6 +261,7 @@ public class ControllerCharacter : MonoBehaviour
     public void Knockback(Vector3 direction){
         
         knockBackFlag = true;
+        rb.isKinematic = false;
 
         // Set the knockback counter for time
         knockbackCounter = knockbackTime;

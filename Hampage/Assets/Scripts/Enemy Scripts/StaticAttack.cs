@@ -9,6 +9,8 @@ public class StaticAttack : MonoBehaviour, AttackStrategy
 
     public int damageAmount = 1;
     private Vector3 knock;
+     // Value to modify y movement in knockback
+    float knockbackModifier = -0.7f;
 
     ControllerCharacter playerController;
     void Start() {
@@ -25,29 +27,34 @@ public class StaticAttack : MonoBehaviour, AttackStrategy
     {
         if(col.gameObject.CompareTag("Player"))
         {
-            PlayerHealth health = col.gameObject.GetComponent<PlayerHealth>();
-            health.DecreaseHealth(damageAmount);
+            HurtPlayer(col.gameObject);
         }
     }
 
-    // Test value to modify y movement in knockback
-    public float knockbackModifier = -1.3f;
+   
 
     // Hurt the player if he enters our hitbox 
     private void OnTriggerEnter(Collider col)
     {
         if (col.gameObject.CompareTag("Player"))
         {
-            knock = playerController.transform.position - transform.position;
-
-            // Set the up direction to 0 and keep the x and z the same
-            knock.y = knockbackModifier;
-            Vector3.Normalize(knock);
-
-            PlayerHealth health = col.gameObject.GetComponent<PlayerHealth>();
-            health.DecreaseHealth(damageAmount);
-            playerController.Knockback(playerController.transform.position - transform.position);
-            playerController.Knockback(knock);
+            HurtPlayer(col.gameObject);
         }
     }
+
+    private void HurtPlayer(GameObject player){
+        knock = playerController.transform.position - transform.position;
+
+        // Set the up direction to 0 and keep the x and z the same
+        knock.y = knockbackModifier;
+        Vector3.Normalize(knock);
+
+        PlayerHealth health = player.GetComponent<PlayerHealth>();
+        health.DecreaseHealth(damageAmount);
+        playerController.Knockback(playerController.transform.position - transform.position);
+        playerController.Knockback(knock);
+    }
+
+
 }
+
