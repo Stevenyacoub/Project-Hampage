@@ -46,7 +46,7 @@ public class ControllerCharacter : MonoBehaviour
     bool knockBackFlag = false;
 
      // Anmations
-    protected Animator anim;
+    //[SerializeField]protected Animator anim;
     bool hasJumped = false;
     public Animator hamsterMovementAnimator;
 
@@ -55,7 +55,7 @@ public class ControllerCharacter : MonoBehaviour
         input = new PlayerInput();
         controller = GetComponent<CharacterController>();
         playerManager = GetComponent<PlayerManager>();
-        anim = GetComponent<Animator>();
+        //anim = GetComponent<Animator>();
         stateManager = GetComponent<PlayerStateManager>();
         rb = GetComponent<Rigidbody>();
 
@@ -255,7 +255,13 @@ public class ControllerCharacter : MonoBehaviour
     protected void onAttack(InputAction.CallbackContext context)
     {
         attackTriggered = context.ReadValueAsButton();
-        anim.SetTrigger("JabInput");
+        hamsterMovementAnimator.SetTrigger("JabInput");
+        Invoke(nameof(ResetJab),0.2f);
+    }
+
+    //Hotfix to reset jab after calling 
+    void ResetJab(){
+        hamsterMovementAnimator.ResetTrigger("JabInput");
     }
 
     public void Knockback(Vector3 direction){
