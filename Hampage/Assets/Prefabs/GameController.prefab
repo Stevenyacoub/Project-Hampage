@@ -67,7 +67,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b6a654e36429f7b4d99f43804b856520, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damageModifier: 1
+  damageAmount: 1
 --- !u!1 &1549028377826759059
 GameObject:
   m_ObjectHideFlags: 0
@@ -499,7 +499,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3758488514083651807}
-  m_LocalRotation: {x: 0.0050373445, y: 0.92770267, z: -0.012526024, w: 0.37307584}
+  m_LocalRotation: {x: 0.0050373436, y: 0.92770267, z: -0.012526022, w: 0.37307584}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -577,7 +577,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3758488514122028431}
-  m_LocalRotation: {x: 0.018585984, y: 0.9266354, z: -0.04621651, w: 0.37264663}
+  m_LocalRotation: {x: 0.018585982, y: 0.9266354, z: -0.04621651, w: 0.37264666}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
