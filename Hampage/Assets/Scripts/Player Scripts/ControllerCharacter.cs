@@ -25,10 +25,6 @@ public class ControllerCharacter : MonoBehaviour
     [SerializeReference] public float groundDistance = 0.4f;
     [SerializeReference] public LayerMask groundMask;
 
-    [SerializeReference] public float knockbackForce = 1f;
-    [SerializeReference] public float knockbackTime = 1f;
-    [SerializeReference] protected float knockbackCounter;
-
     //private Vector3 moveDirection;
     protected Vector3 velocity;
     protected bool isGrounded;
@@ -42,6 +38,14 @@ public class ControllerCharacter : MonoBehaviour
     protected bool jumpTriggered;
     protected bool attackTriggered;
 
+    // For knockback
+    Rigidbody rb;
+    [SerializeReference] public float knockbackForce = 1f;
+    [SerializeReference] public float knockbackTime = 1f;
+    [SerializeReference] protected float knockbackCounter;
+    public Vector3 knockVector;
+    bool knockBackFlag = false;
+
     public Animator hamsterMovementAnimator;
 
     public virtual void Awake()
@@ -51,6 +55,7 @@ public class ControllerCharacter : MonoBehaviour
         playerManager = GetComponent<PlayerManager>();
         anim = GetComponent<Animator>();
         stateManager = GetComponent<PlayerStateManager>();
+        //
 
         // Adding our methods (On Move,etc) to the delegate for the motion (hence +=)
         // This makes our methods call-backs, and calls these methods when a condition is met
@@ -73,21 +78,33 @@ public class ControllerCharacter : MonoBehaviour
         // We only care about button-down for interact, so just started state
         input.CharacterControls.Interact.started += onInteract;
 
+        // Don't detect collisions on start (prevent camera jitter)
+        rb.detectCollisions = false;
+
     }
 
     public virtual void Update()
     {
-        velocity.y += gravityScale * Time.deltaTime;
-        // !! Not reccomended to use .Move() twice, but I haven't been able to figure out how to combine
-
-        // only moving controller if it's active (inactive when using hamsterball)
-        if(controller.enabled)
-            controller.Move(velocity * Time.deltaTime);
-
-        handleRotation();
-        
+    
         if(knockbackCounter <= 0)
         {
+
+            if(knockBackFlag == true){
+                controller.enabled = true;
+                rb.isKinematic = true;
+                rb.detectCollisions = false;
+                knockBackFlag = false;
+            }
+            
+            velocity.y += gravityScale * Time.deltaTime;
+            // !! Not reccomended to use .Move() twice, but I haven't been able to figure out how to combine
+
+            // only moving controller if it's active (inactive when using hamsterball)
+            if(controller.enabled)
+              controller.Move(velocity * Time.deltaTime);
+
+            handleRotation();
+
             //If not running or grounded, use normal movement, else use runMultiplier
             Vector3 moveDir;
             if(!(runTriggered && isGrounded)){
@@ -109,6 +126,9 @@ public class ControllerCharacter : MonoBehaviour
         }
         else
         {
+
+            rb.isKinematic = false;
+            rb.AddForce(knockVector);
             knockbackCounter -= Time.deltaTime;
         }
 
@@ -236,9 +256,21 @@ public class ControllerCharacter : MonoBehaviour
     }
 
     public void Knockback(Vector3 direction){
+        
+        knockBackFlag = true;
+
+        // Set the knockback counter for time
         knockbackCounter = knockbackTime;
 
-        currMovement = direction * knockbackForce;
+        // Get the vector for knockback movement
+        knockVector = direction * knockbackForce;
+        //currMovement = direction * knockbackForce;
+
+       
+        controller.enabled = false;
+        rb.detectCollisions = true;
+
+
     }
 
 
