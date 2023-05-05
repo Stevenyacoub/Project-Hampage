@@ -14,8 +14,6 @@ public class PlayerHealth : MonoBehaviour
         charControls = GameManager.staticPlayer.GetComponent<ControllerCharacter>();
     }
 
-   
-
     public void AddHealth(float health)
     {
         Debug.Log("Ham healed! Current Health: " + this.health);
@@ -25,7 +23,7 @@ public class PlayerHealth : MonoBehaviour
     public void DecreaseHealth(float health)
     {
         //checks if player dies and is not already dead
-        if (this.health <= 0 && !isDead) //modified by Alan
+        if ((this.health - health) <= 0 && !isDead) //modified by Alan
         {
             //player is no longer dead
             isDead = true; //Alan
