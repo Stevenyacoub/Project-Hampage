@@ -7,6 +7,11 @@ public class StaticAttack : MonoBehaviour, AttackStrategy
     public int damageModifier = 1;
     //ControllerCharacter player;
 
+    ControllerCharacter player;
+    void Start() {
+        player = GameManager.staticPlayer.GetComponent<ControllerCharacter>();
+    }
+
     public void performAttack()
     {
         throw new System.NotImplementedException();
@@ -27,7 +32,7 @@ public class StaticAttack : MonoBehaviour, AttackStrategy
         {
             PlayerHealth health = col.gameObject.GetComponent<PlayerHealth>();
             health.DecreaseHealth(damageModifier);
-            //player.Knockback(player.transform.position - transform.position);
+            player.Knockback(player.transform.position - transform.position);
 
         }
     }
