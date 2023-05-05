@@ -10,7 +10,6 @@ public class Respawn : MonoBehaviour
 
     void Start()
     {
-        rb = GetComponent<Rigidbody>();
     }
 
     void OnTriggerEnter(Collider other) 
