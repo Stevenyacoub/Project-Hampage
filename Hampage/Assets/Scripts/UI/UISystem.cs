@@ -62,29 +62,35 @@ public class UISystem : MonoBehaviour
     }
 
     void Update() {
-        // Once the player presses escape
-        if (Input.GetKeyDown(KeyCode.Escape) && !GameManager.timeUp)
-        {
-            // If the game is not paused then pause it, otherwise resume the game
-            if (isPaused)
-            {
+     
+        // Lock or unlock cursor based on pause state
+        if(isPaused){
+            Cursor.visible = true;
+            Cursor.lockState = CursorLockMode.None;
+            
+            // If space is pressed & we're not timed up or dead, resume
+            if (Input.GetKeyDown(KeyCode.Escape) && !GameManager.timeUp && !PlayerHealth.isDead)
                 Resume();
+
+        }else{
+            if(!PlayerHealth.isDead){
                 Cursor.visible = false;
                 Cursor.lockState = CursorLockMode.Locked;
-                
-            }
-            else
-            {
-                Pause();
+            }else{
                 Cursor.visible = true;
                 Cursor.lockState = CursorLockMode.None;
             }
+
+            if (Input.GetKeyDown(KeyCode.Escape) && !GameManager.timeUp && !PlayerHealth.isDead)
+                Pause();
         }
+        
     }
 
     // Pause() dictates what happens once the game is paused
     void Pause()
     {
+
         // Activate the pause menu
         pauseMenu.SetActive(true);
         // Positions the map camera to center on the player when we enter the pause menu
@@ -98,6 +104,8 @@ public class UISystem : MonoBehaviour
         player.GetComponent<ControllerCharacter>().enabled = false;
         // Set isPaused bool to true
         isPaused = true;
+
+        
     }
 
     // Resume() dictates what happens once the game is unpaused

@@ -129,7 +129,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3758488512579167273}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -12.404324, y: 1, z: -9.278112}
+  m_LocalPosition: {x: -5.9703712, y: 1, z: -8.022136}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -499,8 +499,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3758488514083651807}
-  m_LocalRotation: {x: 0.0153200645, y: 0.04737831, z: -0.0007267404, w: 0.99875927}
-  m_LocalPosition: {x: 0, y: 0, z: 0.0000019073486}
+  m_LocalRotation: {x: 0.013361902, y: 0.3187074, z: -0.0044933204, w: 0.94774836}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -577,8 +577,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3758488514122028431}
-  m_LocalRotation: {x: 0.05158983, y: 0.047320608, z: -0.0024472736, w: 0.99754363}
-  m_LocalPosition: {x: 0, y: 0, z: 0.0000038146973}
+  m_LocalRotation: {x: 0.04777999, y: 0.31833386, z: -0.016067384, w: 0.9466375}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -655,8 +655,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3758488514223901756}
-  m_LocalRotation: {x: 0.033436496, y: 0.047357317, z: -0.0015861321, w: 0.998317}
-  m_LocalPosition: {x: 0, y: 0, z: 0.0000019073486}
+  m_LocalRotation: {x: 0.030553235, y: 0.31857342, z: -0.010274396, w: 0.94734997}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -989,8 +989,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3758488514404936509}
-  m_LocalRotation: {x: 0.0334365, y: 0.04735731, z: -0.0015861319, w: 0.998317}
-  m_LocalPosition: {x: -11.754234, y: 0.2894963, z: -2.098837}
+  m_LocalRotation: {x: 0.030553237, y: 0.31857342, z: -0.010274397, w: 0.94734997}
+  m_LocalPosition: {x: -3.9785671, y: 0.6663853, z: -5.24663}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1161,6 +1161,18 @@ PrefabInstance:
     - target: {fileID: 3512663741252324894, guid: 96cf33f54f8de42a69f82ee216fc2e30, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 102
+      objectReference: {fileID: 0}
+    - target: {fileID: 3736684912081130405, guid: 96cf33f54f8de42a69f82ee216fc2e30, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3736684912081130405, guid: 96cf33f54f8de42a69f82ee216fc2e30, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3736684912081130405, guid: 96cf33f54f8de42a69f82ee216fc2e30, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -370
       objectReference: {fileID: 0}
     - target: {fileID: 3741066949767961036, guid: 96cf33f54f8de42a69f82ee216fc2e30, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
@@ -3758,7 +3770,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5977377421241285143, guid: 70ec14810f2394e538778efdb0461360, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -11.49
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5977377421241285143, guid: 70ec14810f2394e538778efdb0461360, type: 3}
       propertyPath: m_LocalPosition.y
@@ -3766,7 +3778,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5977377421241285143, guid: 70ec14810f2394e538778efdb0461360, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.68
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5977377421241285143, guid: 70ec14810f2394e538778efdb0461360, type: 3}
       propertyPath: m_LocalRotation.w

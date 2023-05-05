@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 3644985410388677754}
   - component: {fileID: 376698724341898207}
   - component: {fileID: 2512650390083546901}
+  - component: {fileID: 938677166107429566}
   m_Layer: 0
   m_Name: Wall_Hole
   m_TagString: Untagged
@@ -84,3 +85,17 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!64 &938677166107429566
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4169847578684460736}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -5852286375780045605, guid: 01590bd48be0f4db4baaf055968ca4da, type: 3}
