@@ -89,7 +89,7 @@ public class HamsterBall : Interactable
         // Enable the players collider, and put him outside the ball
         player.GetComponent<SphereCollider>().enabled = true;
         insideBall = transform.position;
-        player.transform.position = insideBall;
+        player.transform.position = insideBall+new Vector3(-2,0,0);
 
         // Disable ball controller and enable player controller
         ballScript.enabled = false;
