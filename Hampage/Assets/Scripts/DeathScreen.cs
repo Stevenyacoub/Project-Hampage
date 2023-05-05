@@ -36,24 +36,4 @@ public class DeathScreen : MonoBehaviour
         gameOverUI.SetActive(true);
     }
 
-    //gets current scene and reloads it
-    public void restart()
-    {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-        Debug.Log("Restart");
-    }
-
-    //loads main menu scene
-    public void mainMenu()
-    {
-        SceneManager.LoadScene("Main Menu");
-        Debug.Log("Main Menu");
-    }
-
-    //quits game
-    public void quit()
-    {
-        Application.Quit();
-        Debug.Log("Quit");
-    }
 }

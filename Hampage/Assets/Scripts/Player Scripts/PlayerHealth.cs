@@ -7,6 +7,11 @@ public class PlayerHealth : MonoBehaviour
     public float health = 5;
     public DeathScreen deathScreen; //Alan
     UISystem ui;
+    ControllerCharacter charControls;
+
+    void Start() {
+        charControls = GameManager.staticPlayer.GetComponent<ControllerCharacter>();
+    }
 
     private bool isDead; //Alan
 
@@ -26,7 +31,10 @@ public class PlayerHealth : MonoBehaviour
             //activates death screen
             deathScreen.gameOver(); //Alan
             Debug.Log("Ham is dead!");
-            Destroy(gameObject);
+            
+            //Don't destroy, but disable character
+            //Destroy(gameObject);
+            charControls.enabled = false;
             
         }
         else
