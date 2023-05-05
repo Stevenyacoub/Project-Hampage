@@ -81,6 +81,8 @@ public class GameManager : MonoBehaviour
     public void RestartLevel(){
         Time.timeScale = 1f;
         UISystem.isPaused = false;
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
