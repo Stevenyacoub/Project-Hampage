@@ -19,7 +19,7 @@ public class Map : MonoBehaviour
     public static DefaultInputActions defaultInput;
 
     // Min and max zoom values for zoom function
-    public float minZoom = 8f, maxZoom = 32f;
+    public float minZoom = 8f, maxZoom = 64f;
     // moveSpeed of the map navigation
     public float moveSpeed = .001f;
 
@@ -49,7 +49,7 @@ public class Map : MonoBehaviour
 
 
         // Set the size "zoom" to be 12
-        mapCamera.orthographicSize = 12f;
+        mapCamera.orthographicSize = 64f;
         // Get the position of the camera
         cameraPosition = mapCamera.transform;
     }

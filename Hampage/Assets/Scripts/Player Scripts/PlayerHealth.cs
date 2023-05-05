@@ -8,12 +8,13 @@ public class PlayerHealth : MonoBehaviour
     public DeathScreen deathScreen; //Alan
     UISystem ui;
     ControllerCharacter charControls;
+    public static bool isDead; //Alan
 
     void Start() {
         charControls = GameManager.staticPlayer.GetComponent<ControllerCharacter>();
     }
 
-    private bool isDead; //Alan
+   
 
     public void AddHealth(float health)
     {
