@@ -39,7 +39,7 @@ public class ControllerCharacter : MonoBehaviour
 
     // For knockback
     Rigidbody rb;
-    [SerializeReference] public float knockbackForce = 2f;
+    float knockbackForce = 2f;
     [SerializeReference] public float knockbackTime = 1f;
     [SerializeReference] protected float knockbackCounter;
     public Vector3 knockVector;
@@ -81,7 +81,7 @@ public class ControllerCharacter : MonoBehaviour
         input.CharacterControls.Interact.started += onInteract;
 
         // Don't detect collisions on start (prevent camera jitter)
-        rb.detectCollisions = false;
+        //rb.detectCollisions = false;
 
     }
 
@@ -92,7 +92,7 @@ public class ControllerCharacter : MonoBehaviour
         {
 
             if(knockBackFlag == true){
-                rb.detectCollisions = false;
+                //rb.detectCollisions = false;
                 controller.enabled = true;
                 rb.isKinematic = true;
                 
@@ -272,7 +272,7 @@ public class ControllerCharacter : MonoBehaviour
 
        
         controller.enabled = false;
-        rb.detectCollisions = true;
+        //rb.detectCollisions = true;
 
 
     }
