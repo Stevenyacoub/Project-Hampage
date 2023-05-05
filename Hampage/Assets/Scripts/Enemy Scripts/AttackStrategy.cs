@@ -4,9 +4,9 @@ using UnityEngine;
 
 public interface AttackStrategy
 {
-    int damageModifier
+    int damageAmount
     {
-        get { return damageModifier; }
+        get { return damageAmount; }
     }
 
     void performAttack();

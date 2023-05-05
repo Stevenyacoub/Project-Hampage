@@ -3,7 +3,6 @@ using UnityEngine.InputSystem;
 
 public class ControllerCharacter : MonoBehaviour
 {
-    protected Animator anim;
     [SerializeReference] public CharacterController controller;
     [SerializeReference] public PlayerManager playerManager;
     [SerializeReference] public InteractBox interactBox;
@@ -25,10 +24,6 @@ public class ControllerCharacter : MonoBehaviour
     [SerializeReference] public float groundDistance = 0.4f;
     [SerializeReference] public LayerMask groundMask;
 
-    [SerializeReference] public float knockbackForce = 1f;
-    [SerializeReference] public float knockbackTime = 1f;
-    [SerializeReference] protected float knockbackCounter;
-
     //private Vector3 moveDirection;
     protected Vector3 velocity;
     protected bool isGrounded;
@@ -42,6 +37,17 @@ public class ControllerCharacter : MonoBehaviour
     protected bool jumpTriggered;
     protected bool attackTriggered;
 
+    // For knockback
+    Rigidbody rb;
+    [SerializeReference] public float knockbackForce = 2f;
+    [SerializeReference] public float knockbackTime = 1f;
+    [SerializeReference] protected float knockbackCounter;
+    public Vector3 knockVector;
+    bool knockBackFlag = false;
+
+     // Anmations
+    protected Animator anim;
+    bool hasJumped = false;
     public Animator hamsterMovementAnimator;
 
     public virtual void Awake()
@@ -51,6 +57,7 @@ public class ControllerCharacter : MonoBehaviour
         playerManager = GetComponent<PlayerManager>();
         anim = GetComponent<Animator>();
         stateManager = GetComponent<PlayerStateManager>();
+        rb = GetComponent<Rigidbody>();
 
         // Adding our methods (On Move,etc) to the delegate for the motion (hence +=)
         // This makes our methods call-backs, and calls these methods when a condition is met
@@ -73,23 +80,36 @@ public class ControllerCharacter : MonoBehaviour
         // We only care about button-down for interact, so just started state
         input.CharacterControls.Interact.started += onInteract;
 
+        // Don't detect collisions on start (prevent camera jitter)
+        rb.detectCollisions = false;
+
     }
 
     public virtual void Update()
     {
-        velocity.y += gravityScale * Time.deltaTime;
-        // !! Not reccomended to use .Move() twice, but I haven't been able to figure out how to combine
+    
+        if(knockbackCounter <= 0)
+        {
 
-        // only moving controller if it's active (inactive when using hamsterball)
-        if(controller.enabled)
-            controller.Move(velocity * Time.deltaTime);
+            if(knockBackFlag == true){
+                rb.detectCollisions = false;
+                controller.enabled = true;
+                rb.isKinematic = true;
+                
+                knockBackFlag = false;
+                velocity.y = -2f; 
+            }
+            
+            velocity.y += gravityScale * Time.deltaTime;
+            // !! Not reccomended to use .Move() twice, but I haven't been able to figure out how to combine
 
-        handleRotation();
-        
-        //if(knockbackCounter <= 0)
-        //{
+            // only moving controller if it's active (inactive when using hamsterball)
+            if(controller.enabled)
+              controller.Move(velocity * Time.deltaTime);
+
+            handleRotation();
+
             //If not running or grounded, use normal movement, else use runMultiplier
-            //Vector3 moveDir = (!(runTriggered && isGrounded) ? currMovement : new Vector3(currMovement.x * runMultiplier, currMovement.y, currMovement.z * runMultiplier));
             Vector3 moveDir;
             if(!(runTriggered && isGrounded)){
                 moveDir = currMovement;
@@ -104,14 +124,16 @@ public class ControllerCharacter : MonoBehaviour
                 controller.Move(moveDir * moveSpeed * Time.deltaTime);
 
             //Commenting out '&& isGrounded' gives us a pseudo-dash that's fun but not practical. Comment out above and uncomment below to try:
-            // //If not running or grounded, use normal movement, else use runMultiplier
-            // Vector3 moveDir = (!(runTriggered && isGrounded) ? currMovement : new Vector3(currMovement.x * runMultiplier, currMovement.y, currMovement.z * runMultiplier));
-            // controller.Move(moveDir * moveSpeed * Time.deltaTime); 
-        //}
-        //else
-        //{
-            //knockbackCounter -= Time.deltaTime;
-        //}
+            //If not running or grounded, use normal movement, else use runMultiplier
+            //Vector3 moveDir = (!(runTriggered && isGrounded) ? currMovement : new Vector3(currMovement.x * runMultiplier, currMovement.y, currMovement.z * runMultiplier));
+            //controller.Move(moveDir * moveSpeed * Time.deltaTime); 
+        }
+        else
+        {
+
+            rb.AddForce(knockVector);
+            knockbackCounter -= Time.deltaTime;
+        }
 
         // If we're moving significantly, animate walk
         if(currMovement.magnitude >= 0.1f){
@@ -130,7 +152,7 @@ public class ControllerCharacter : MonoBehaviour
         transform.rotation = Quaternion.Euler(0f, angle, 0f);
     }
 
-    bool hasJumped = false;
+    
 
     public virtual void handleGravity(){
        
@@ -236,12 +258,24 @@ public class ControllerCharacter : MonoBehaviour
         anim.SetTrigger("JabInput");
     }
 
-    /*    public void Knockback(Vector3 direction)
-        {
-            knockbackCounter = knockbackTime;
+    public void Knockback(Vector3 direction){
+        
+        knockBackFlag = true;
+        rb.isKinematic = false;
 
-            currMovement = direction * knockbackForce;
-        }*/
+        // Set the knockback counter for time
+        knockbackCounter = knockbackTime;
+
+        // Get the vector for knockback movement
+        knockVector = direction * knockbackForce;
+        //currMovement = direction * knockbackForce;
+
+       
+        controller.enabled = false;
+        rb.detectCollisions = true;
+
+
+    }
 
 
 

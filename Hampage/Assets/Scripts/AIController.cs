@@ -3,27 +3,30 @@ using UnityEngine.AI;
 
 public class AIController : MonoBehaviour
 {
+
+    // Created by Alan Robertson
+
     public NavMeshAgent agent;
-    public Transform player;
-    public LayerMask whatIsGround;
-    public LayerMask whatIsPlayer;
-    public GameObject projectileSpawn;
+    protected Transform player;
+    protected LayerMask whatIsGround;
+    protected LayerMask whatIsPlayer;
+    GameObject projectileSpawn;
 
     //Patroling
     public Vector3 walkPoint;
-    bool walkPointSet;
-    public float walkPointRange;
+    protected bool walkPointSet;
+    public float walkPointRange = 5f;
 
     //Attacking
-    public float timeBetweenAttacks;
+    float timeBetweenAttacks = 2f;
     public float projectileUpForce = 3f;
     public float projectileForwardForce = 30f;
     bool alreadyAttacked;
     public GameObject projectile;
 
     //States
-    public float sightRange;
-    public float attackRange;
+    public float sightRange = 25f;
+    public float attackRange = 13f;
     public bool playerInSightRange;
     public bool playerInAttackRange;
 
@@ -31,17 +34,19 @@ public class AIController : MonoBehaviour
     void Start()
     {
         projectileSpawn = transform.GetChild(0).gameObject;
-        Debug.Log(projectileSpawn.name);
+        player = GameManager.staticPlayer.transform;
     }
 
     private void Awake()
     {
         //gets player and navMeshAgent
-        player = GameObject.Find("Player").transform;
         agent = GetComponent<NavMeshAgent>();
+        whatIsGround = LayerMask.GetMask("Ground");
+        whatIsPlayer = LayerMask.GetMask("Player");
+
     }
 
-    private void Update()
+    void Update()
     {
         //Check for sight and attack range
         playerInSightRange = Physics.CheckSphere(transform.position, sightRange, whatIsPlayer);
@@ -53,7 +58,7 @@ public class AIController : MonoBehaviour
         if (playerInAttackRange && playerInSightRange) AttackPlayer();
     }
 
-    private void Patroling()
+    void Patroling()
     {
         //find walkpoint of none is set
         if (!walkPointSet)
@@ -73,7 +78,8 @@ public class AIController : MonoBehaviour
         if (distanceToWalkPoint.magnitude < 1f)
             walkPointSet = false;
     }
-    private void SearchWalkPoint()
+
+    protected void SearchWalkPoint()
     {
         //Calculate random point in range
         float randomZ = Random.Range(-walkPointRange, walkPointRange);
@@ -88,18 +94,22 @@ public class AIController : MonoBehaviour
         }
     }
 
-    private void ChasePlayer()
+    void ChasePlayer()
     {
         //Enemy will follow the player's position
         agent.SetDestination(player.position);
     }
 
-    private void AttackPlayer()
+    void AttackPlayer()
     {
         //When in attack range the enemy doesn't move
         agent.SetDestination(transform.position);
 
-        transform.LookAt(player);
+        //Make our transform look towards the player, except only rotate around y
+        transform.LookAt(new Vector3(player.position.x, transform.position.y, player.position.z));
+        //Make our projectile spawn look exactly at the player
+        projectileSpawn.transform.LookAt(player);
+        
 
 
         if (!alreadyAttacked)
@@ -108,7 +118,7 @@ public class AIController : MonoBehaviour
 
           
             Rigidbody rb = Instantiate(projectile, projectileSpawn.transform.position, transform.rotation).GetComponent<Rigidbody>();
-            rb.AddForce(transform.forward * projectileForwardForce, ForceMode.Impulse);
+            rb.AddForce(projectileSpawn.transform.forward * projectileForwardForce, ForceMode.Impulse);
             rb.AddForce(transform.up * projectileUpForce, ForceMode.Impulse);
 
 
@@ -117,6 +127,7 @@ public class AIController : MonoBehaviour
             Invoke(nameof(ResetAttack), timeBetweenAttacks);
         }
     }
+
     private void ResetAttack()
     {
         alreadyAttacked = false;

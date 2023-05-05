@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: bb3e6979c0b864c728672c6e52699d87
+guid: 584e9e6d6cd1b431c8d9095ca55871f4
 ModelImporter:
   serializedVersion: 21300
   internalIDToNameTable:
@@ -53,7 +53,7 @@ ModelImporter:
       cycleOffset: 0
       loop: 0
       hasAdditiveReferencePose: 0
-      loopTime: 1
+      loopTime: 0
       loopBlend: 0
       loopBlendOrientation: 0
       loopBlendPositionY: 0
@@ -104,7 +104,7 @@ ModelImporter:
       takeName: rig|Walk
       internalID: 0
       firstFrame: 0
-      lastFrame: 53
+      lastFrame: 39
       wrapMode: 0
       orientationOffsetY: 0
       level: 0

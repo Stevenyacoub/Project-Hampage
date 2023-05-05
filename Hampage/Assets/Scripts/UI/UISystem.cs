@@ -58,7 +58,6 @@ public class UISystem : MonoBehaviour
 
     // Called from GameManager
     public void UpdateHealthCounter(float health){
-        Debug.Log("Set Health to" + health);
         healthHUD.SetText("Health: " + health);
     }
 
