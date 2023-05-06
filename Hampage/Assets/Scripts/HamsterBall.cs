@@ -37,11 +37,26 @@ public class HamsterBall : Interactable
         return true;
     }
 
+    bool inBall;
+    bool canExit = false;
+
+    private void Update() {
+        if(inBall){
+            player.transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.z);
+            //player.transform.Rotate(euler, Space.World);
+
+            if(Input.GetKeyDown(KeyCode.E) && canExit){
+                inBall = false;
+                DisableMovement();
+            }
+        }
+    }
+
     void Awake()
     {
         
         // Instantiate the player objects
-        player = GameObject.FindGameObjectWithTag("Player");
+        player = GameManager.staticPlayer;
         playerController = player.GetComponent<CharacterController>();
         //stateManager = player.GetComponent<PlayerStateManager>();
 
@@ -63,8 +78,14 @@ public class HamsterBall : Interactable
      */
     public void EnableMovement()
     {
+        inBall = true;
         // Makes the player object a child of the hamsterball object
         player.transform.SetParent(transform);
+
+        Rigidbody playerRb = player.GetComponent<ControllerCharacter>().rb;
+     
+        playerRb.detectCollisions = true;
+
         // Disables player collider then moves him into the ball with correct orientation
         player.GetComponent<SphereCollider>().enabled = false;
         insideBall = transform.position;
@@ -75,6 +96,11 @@ public class HamsterBall : Interactable
         ballScript.enabled = true;
         rb.isKinematic = false;
         playerController.enabled = false;
+        Invoke(nameof(EnableExit),0.2f);
+    }
+
+    void EnableExit(){
+        canExit = true;
     }
 
     /* DisableMovement() is invoked when the player interacts with the ball from the inside.
@@ -82,6 +108,8 @@ public class HamsterBall : Interactable
      * player model outside the ball.
      */
     public void DisableMovement() {
+        inBall = false;
+        canExit = false;
         // Removes the player as a child of the Hamster Ball
         Transform childToRemove = transform.Find("Player");
         childToRemove.parent = null;

@@ -38,7 +38,7 @@ public class ControllerCharacter : MonoBehaviour
     protected bool attackTriggered;
 
     // For knockback
-    Rigidbody rb;
+    public Rigidbody rb;
     float knockbackForce = 2f;
     [SerializeReference] public float knockbackTime = 1f;
     [SerializeReference] protected float knockbackCounter;
