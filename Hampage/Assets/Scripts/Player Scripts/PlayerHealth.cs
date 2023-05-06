@@ -25,15 +25,7 @@ public class PlayerHealth : MonoBehaviour
         //checks if player dies and is not already dead
         if ((this.health - health) <= 0 && !isDead) //modified by Alan
         {
-            //player is no longer dead
-            isDead = true; //Alan
-            //activates death screen
-            deathScreen.gameOver(); //Alan
-            Debug.Log("Ham is dead!");
-            
-            //Don't destroy, but disable character
-            //Destroy(gameObject);
-            charControls.enabled = false;
+           KillPlayer();
             
         }
         else
@@ -41,9 +33,26 @@ public class PlayerHealth : MonoBehaviour
             Debug.Log("Ham took damage! Current Health: " + this.health);
             this.health -= health;
             
+            //Edge case for minus health
+            if(this.health <= 0){
+                KillPlayer();
+            }
+
         }
 
         ui.UpdateHealthCounter(this.health);
+    }
+
+    void KillPlayer(){
+        //player is no longer dead
+        isDead = true; //Alan
+        //activates death screen
+        deathScreen.gameOver(); //Alan
+        Debug.Log("Ham is dead!");
+        
+        //Don't destroy, but disable character
+        //Destroy(gameObject);
+        charControls.enabled = false;
     }
 
     public void setUpWithUI(UISystem ui){
