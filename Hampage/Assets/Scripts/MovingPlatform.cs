@@ -22,11 +22,17 @@ public class MovingPlatform : MonoBehaviour
     private float expectedTime;
     private float travelTime;
 
+    public GameObject gameController;
+    public GameObject interactBox;
+
 
     // Start function runs when the scene runs so and we want the platform to move while we are in the scene 
     void Start()
     {
         updateWaypointPath();
+        GameObject player = GameManager.staticPlayer;
+        gameController = player.transform.parent.gameObject;
+
     }
 
     /*FixedUpdate (Unity Method)
@@ -55,13 +61,19 @@ public class MovingPlatform : MonoBehaviour
     platform rather than falling off. 
     */
     private void OnTriggerEnter(Collider player){
-        player.transform.SetParent(transform);
+        if(player.CompareTag("Player")){
+            player.transform.SetParent(transform);
+        }
+
+        // This method sets all entering triggers to be a child of waypoint, meaning it's also grabbing the interact box
     }
     /*OnTriggerExit (Unity Method)
     If the player leaves the platform then we need to remove them from being the platforms child object
     */
     private void OnTriggerExit(Collider player) {
-        player.transform.SetParent(null);
+        if(player.CompareTag("Player")){
+            player.transform.SetParent(gameController.transform);
+        }
     }
 
     /*Get Next Index

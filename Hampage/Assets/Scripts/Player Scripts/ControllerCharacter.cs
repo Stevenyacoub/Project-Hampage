@@ -81,7 +81,7 @@ public class ControllerCharacter : MonoBehaviour
         input.CharacterControls.Interact.started += onInteract;
 
         // Don't detect collisions on start (prevent camera jitter)
-        //rb.detectCollisions = false;
+        rb.detectCollisions = true;
 
     }
 
